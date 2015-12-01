@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h4 align="center">Contact</h4>
+
+    {% if envoi %}<h5 align="center">Votre message a bien été envoyé !</h5>{% endif %}
+    {% if error %}<h5 align="center">Erreur, veuillez recopier correctement le captcha</h5>{% endif %}
+
+    <form role="form" action="{% url "blog.views.contact" %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="email">Votre adresse mail:</label>
+            <input type="email" class="form-control" id="email" name="auteur">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Sujet:</label>
+            <input type="text" class="form-control" id="pwd" name="sujet">
+        </div>
+        <div class="form-group">
+            <label for="comment">Message:</label>
+            <textarea class="form-control" rows="5" id="comment" name="message"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.captcha.captcha }}">Veuillez recopier les lettres suivantes:</label>
+            {{ form.captcha }}
+        </div>
+        <div class="centreur">
+            <button type="submit" class="btn btn-default">Envoyer</button>  
+        </div>  
+    </form>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% load static %}
+{% load affichageCategories affichageDerniersArticles %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script type="text/javascript"
+            src="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js' %}"></script>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css' %}"/>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link href="{% static 'css/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <title>{% block title %}Un Vulgaire Developpeur{% endblock %}</title>
+</head>
+
+<body>
+<header>
+    <a href="{% url "blog.views.home" %}">
+        <div id="banniere" alt="banniere"></div>
+    </a>
+</header>
+
+
+<div class="container">
+<div id="separationVerticale"></div>
+
+    <section id="content" class="col-sm-9">
+        {% block content %}{% endblock %}
+    </section>
+
+    <nav id="navigation" class="col-sm-3">
+        <h3>Categories</h3>
+
+        {% affichageCategories %}
+
+        <div id="separationVerticale2"></div>
+        <h3>Derniers articles</h3>
+        {% affichageDerniersArticles %}
+	
+	<div id="separationVerticale2"></div>
+	<ul class="list-group contact">
+    		<li class="list-group-item"><a href="{% url "blog.views.contact"%}"> Contact</a></li>
+	</ul>
+	
+        <form class="input-group recherche" action="{% url "blog.views.recherche" %}" method="post">
+            {% csrf_token %}
+            <input type="text" class="search-query form-control" name="recherche" id="id_recherche" placeholder="Recherche"/>
+            <span class="input-group-btn">
+                <button class="btn btn-search" type="submit">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </form>
+    </nav>
+</div>
+<footer></footer>
+</body>
+</html>

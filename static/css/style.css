@@ -1,0 +1,175 @@
+a {
+    color: rgb(244, 122, 0);
+    outline: 0;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(244, 122, 0);
+}
+
+#banniere {
+    height: 440px;
+    background: url('../images/vulgaireDevelopeurTaille.png') no-repeat center;
+    position: relative;
+    margin-bottom: 25px;
+}
+
+#content {
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-top: 40px;
+}
+
+#separationVerticale {
+    height: 1px;
+    margin-left: 90px;
+    margin-right: 90px; 
+    border-top: 1px solid darkgrey;
+}
+
+#separationVerticale2 {
+    height: 1px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 1px solid darkgrey;
+}
+
+#navigation {
+    border-left: 1px solid darkgrey;
+    padding-left: 30px;
+    padding-right: 45px; 
+    margin-top: 40px;
+    text-align: center;
+}
+
+header {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#defineWidth {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@font-face {
+    font-family: 'Asap';
+    src: url('Asap-Regular.otf');
+}
+
+@font-face {
+    font-family: 'Electronic';
+    src: url('EHSMB.TTF');
+}
+
+#navigation ul, #navigation li {
+    padding-left: 10px;
+    text-align: left;
+}
+
+ul#listeCategories {
+    list-style: none;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+
+li.categories {
+    text-indent: 15px;
+    padding: 3px 0px 3px 10px;
+}
+
+.lienCategorie {
+    vertical-align: middle;
+    opacity: 1 display : inline-block;
+}
+
+.puce {
+    background: url("../images/puce.png") no-repeat left;
+    width: 27px;
+    height: 21px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: -39px; /*somme des tailles des div*/
+}
+
+.couleurPuce {
+    opacity: 0.3;
+    margin-left: 5px;
+    margin-top: 4px;
+    width: 16px;
+    height: 16px;
+    transition: opacity 1s;
+    line-height: 12px;
+}
+
+.categories:hover .couleurPuce {
+    /*quand on passe sur li, on change l'opacity de la couleur*/
+    opacity: 1;
+}
+
+p {
+    text-align: left;
+    line-height: 1.5;
+    font-size: 11pt;
+    color: rgb(40, 40, 40);
+}
+
+h3 {
+    font-family: Electronic, Calibri, Arial, sans-serif;
+}
+
+h1, h2, h4, h5, h6 {
+    font-family: Calibri, Arial, sans-serif;
+}
+
+body {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+hr {
+    border-top: 1px solid darkgrey;
+}
+
+#content {
+    text-align: left;
+}
+
+.centreur {
+    text-align: center;
+}
+
+.btn-search {
+    color: #fff;
+    background-color: rgb(255, 165, 74);
+    border-color: rgb(255, 143, 32);
+}
+
+.btn-search:focus,
+.btn-search.focus {
+    color: #fff;
+    background-color: rgb(255, 143, 32);
+    border-color: rgb(255, 143, 32);
+}
+
+.btn-search:hover {
+    color: #fff;
+    background-color: rgb(255, 143, 32);
+    border-color: rgb(255, 143, 32);
+}
+
+.recherche {
+    margin-top: 25px;
+}
+
+.infosArticle{
+    color: darkgrey;
+}
+
+.contact {
+    margin-top: 20px;
+    text-align: center;
+}
