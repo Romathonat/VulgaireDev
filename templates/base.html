@@ -13,6 +13,23 @@
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
     <title>{% block title %}Un Vulgaire Developpeur{% endblock %}</title>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-70973246-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 </head>
 
 <body>
@@ -24,7 +41,7 @@
 
 
 <div class="container">
-<div id="separationVerticale"></div>
+    <div id="separationVerticale"></div>
 
     <section id="content" class="col-sm-9">
         {% block content %}{% endblock %}
@@ -38,15 +55,16 @@
         <div id="separationVerticale2"></div>
         <h3>Derniers articles</h3>
         {% affichageDerniersArticles %}
-	
-	<div id="separationVerticale2"></div>
-	<ul class="list-group contact">
-    		<li class="list-group-item"><a href="{% url "blog.views.contact"%}"> Contact</a></li>
-	</ul>
-	
+
+        <div id="separationVerticale2"></div>
+        <ul class="list-group contact">
+            <li class="list-group-item"><a href="{% url "blog.views.contact" %}"> Contact</a></li>
+        </ul>
+
         <form class="input-group recherche" action="{% url "blog.views.recherche" %}" method="post">
             {% csrf_token %}
-            <input type="text" class="search-query form-control" name="recherche" id="id_recherche" placeholder="Recherche"/>
+            <input type="text" class="search-query form-control" name="recherche" id="id_recherche"
+                   placeholder="Recherche"/>
             <span class="input-group-btn">
                 <button class="btn btn-search" type="submit">
                     <span class="glyphicon glyphicon-search"></span>
