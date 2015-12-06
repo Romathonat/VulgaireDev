@@ -4,7 +4,7 @@
     <h4 align="center">Contact</h4>
 
     {% if envoi %}<h5 align="center">Votre message a bien été envoyé !</h5>{% endif %}
-    {% if error %}<h5 align="center">Erreur, veuillez recopier correctement le captcha</h5>{% endif %}
+    {% if error %}<h5 align="center">Erreur, veuillez remplir tous les champs et recopier correctement le captcha</h5>{% endif %}
 
     <form role="form" action="{% url "blog.views.contact" %}" method="post">
         {% csrf_token %}
