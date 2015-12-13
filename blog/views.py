@@ -1,12 +1,12 @@
-	
 # coding: utf-8
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-from blog.models import Article,Categorie
+from blog.models import Article, Categorie
 from django.core.paginator import Paginator, EmptyPage
 from blog.forms import rechercheForm
 import re
 from blog.forms import ContactForm
 from django.core.mail import send_mail
+
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -27,9 +27,10 @@ def lire(request, slug):
     categories = tiret.join(categories)
     return render(request, 'lire.html', {'article': articles[0], 'categories': categories})
 
+
 def categorie(request, nom):
-    categorie = get_object_or_404(Categorie,nom=nom)
-    articles = Article.objects.filter(categorie=categorie,publie=True)
+    categorie = get_object_or_404(Categorie, nom=nom)
+    articles = Article.objects.filter(categorie=categorie, publie=True)
     return render(request, 'categorie.html', locals())
 
 
@@ -45,32 +46,33 @@ def recherche(request):
             resultatsRecherche = []
 
             for article in articles:
-                #les mots du contenu
+                # les mots du contenu
                 mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
                 mots = mots.split(" ")
                 mots = [mot.lower() for mot in mots]
                 for mot in mots:
                     if (mot == search):
-                        appendIfUnique(resultatsRecherche,article)
+                        appendIfUnique(resultatsRecherche, article)
 
-                #les mots du titre
+                # les mots du titre
                 motsTitre = article.titre.split(" ")
                 motsTitre = [mot.lower() for mot in motsTitre]
                 for motTitre in motsTitre:
                     if (motTitre == search):
-                        appendIfUnique(resultatsRecherche,article)
+                        appendIfUnique(resultatsRecherche, article)
 
-                #les mots de la preview
+                # les mots de la preview
                 motsPreview = re.sub(r'<.*?>|&nbsp;', ' ', article.preview)
                 motsPreview = motsPreview.split(" ")
                 motsPreview = [mot.lower() for mot in motsPreview]
                 for motPreview in motsPreview:
                     if (motPreview == search):
-                        appendIfUnique(resultatsRecherche,article)
+                        appendIfUnique(resultatsRecherche, article)
 
     return render(request, 'recherche.html', locals())
 
-def appendIfUnique(list,ajout):
+
+def appendIfUnique(list, ajout):
     if ajout not in list:
         list.append(ajout)
 
@@ -84,7 +86,7 @@ def contact(request):
             message = form.cleaned_data['message']
             auteur = form.cleaned_data['auteur']
 
-            send_mail(sujet, message, auteur,['r.mathonat@laposte.net'], fail_silently=False)
+            send_mail(sujet, message, auteur, ['r.mathonat@laposte.net'], fail_silently=False)
 
             envoi = True
         else:
