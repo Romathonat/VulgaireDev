@@ -9,6 +9,26 @@ echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
 source /var/www/.virtualenvs/virtualVulgaireDev/bin/activate
+source /home/webUser/.profile
+
+# Start your Django Unicorn
+# Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
+cd $DJANGODIR
+exec gunicorn VulgaireDev.wsgi \
+  --name $NAME \
+  --workers $NUM_WORKERS \
+  --user=$USER --group=$GROUP \
+ #!/bin/bash
+NAME="vulgaireDev"                                  # Name of the application
+DJANGODIR=/webapps/VulgaireDev/            # Django project directory
+USER=webUser                                        # the user to run as
+GROUP=webapps                                     # the group to run as
+NUM_WORKERS=3                                     # how many worker processes should Gunicorn spawn
+
+echo "Starting $NAME as `whoami`"
+
+# Activate the virtual environment
+source /var/www/.virtualenvs/virtualVulgaireDev/bin/activate
 
 
 # Start your Django Unicorn
@@ -19,4 +39,6 @@ exec gunicorn VulgaireDev.wsgi \
   --workers $NUM_WORKERS \
   --user=$USER --group=$GROUP \
   --log-level=debug \
+  --log-file=/var/log/gunicorn/entries.log
+ --log-level=debug \
   --log-file=/var/log/gunicorn/entries.log
