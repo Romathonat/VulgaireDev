@@ -82,16 +82,21 @@ def contact(request):
         form = ContactForm(request.POST)
 
         if form.is_valid():
-            sujet = form.cleaned_data['sujet']
-            message = form.cleaned_data['message']
-            auteur = form.cleaned_data['auteur']
+            sujetValidate = form.cleaned_data['sujet']
+            messageValidate = form.cleaned_data['message']
+            auteurValidate = form.cleaned_data['auteur']
 
-            send_mail(sujet, message, auteur, ['r.mathonat@laposte.net'], fail_silently=False)
+            send_mail(sujetValidate, messageValidate, auteurValidate, ['r.mathonat@laposte.net'], fail_silently=False)
 
             envoi = True
         else:
             error = True
+            data = request.POST
+            sujet = data['sujet']
+            message = data['message']
+            auteur = data['auteur']
     else:
+
         form = ContactForm()
 
     return render(request, 'contact.html', locals())
