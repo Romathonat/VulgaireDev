@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h4 align="center">Nouvel utilisateur</h4>
+    {% if userCreated %}
+        <p class="alert alert-success">
+            Votre compte a bien été créé !
+        </p>
+
+    {% else %}
+        {% if userExist %}
+            <p class="alert alert-danger">
+                Ce nom d'utilisateur existe déjà !
+            </p>
+        {% endif %}
+        {% if wrongPassword %}
+            <p class="alert alert-danger">
+                Les mots de passe ne correspondent pas.
+            </p>
+        {% endif %}
+        {% if error %}
+            <p class="alert alert-danger">
+                Erreur, veuillez remplir tous les champs et recopier correctement le captcha
+            </p>
+        {% endif %}
+
+        <form role="form" action="{% url "blog.views.registerUser" %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Nom utilisateur:</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ username }}">
+            </div>
+            <div class="form-group">
+                <label for="mail">Votre adresse mail:</label>
+                <input type="email" class="form-control" id="mail" name="mail" value="{{ mail }}">
+            </div>
+            <div class="form-group">
+                <label for="password">Votre mot de passe:</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirm">Confirmez votre mot de passe:</label>
+                <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm">
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.captcha.captcha }}">Veuillez recopier les lettres suivantes:</label>
+                {{ form.captcha }}
+            </div>
+
+            <div class="centreur">
+                <button type="submit" class="btn btn-default">Envoyer</button>
+            </div>
+        </form>
+    {% endif %}
+
+{% endblock %}

@@ -54,18 +54,26 @@
     </section>
 
     <nav id="navigation" class="col-sm-3">
-        <h3>Categories</h3>
+        <h3>Catégories</h3>
 
         {% affichageCategories %}
 
         <div id="separationVerticale2"></div>
         <h3>Derniers articles</h3>
+
         {% affichageDerniersArticles %}
 
         <div id="separationVerticale2"></div>
+
+        <ul>
+            <li class="list-group-item"><a href="{% url "blog.views.proposeArticle" %}"> Proposer un Article</a></li>
+        </ul>
         <ul class="list-group contact">
             <li class="list-group-item"><a href="{% url "blog.views.contact" %}"> Contact</a></li>
         </ul>
+
+        <div id="separationVerticale2"></div>
+
 
         <form class="input-group recherche" action="{% url "blog.views.recherche" %}" method="post">
             {% csrf_token %}
@@ -78,8 +86,21 @@
             </span>
         </form>
     </nav>
+
+    <footer class="col-sm-12">
+        {% if user.is_authenticated %}
+            <p class="centreur foot">Connecté en tant que {{ user.get_username }}. <a href="{% url "deconnexion" %}?next={{ request.path }}">Deconnexion</a>
+            </p>
+        {% else %}
+            <p class="centreur foot">Bienvenue. <a href="{% url "connexion" %}?next={{ request.path }}">Connexion</a></p>
+        {% endif %}
+    </footer>
 </div>
-<footer></footer>
 </body>
+
+{% if removeNav %}
+    <script type="text/javascript"
+            src="{% static 'js/removeNav.js' %}"></script>
+{% endif %}
 
 </html>

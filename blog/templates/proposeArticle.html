@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h4 align="center">Proposer un article</h4>
+    <form action="{% url "blog.views.proposeArticle" %} method=" post>
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+    </form>
+{% endblock %}

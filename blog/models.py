@@ -18,13 +18,21 @@ class Article(models.Model):
     def __str__(self):
         return self.titre
 
+class ArticleProposition(models.Model):
+    titre = models.CharField(max_length=100)
+    preview = RichTextUploadingField()
+    contenu = RichTextUploadingField()
+    categorie = models.ManyToManyField('Categorie')
+
+    def __str__(self):
+        return self.titre
+
+
 @receiver(pre_save, sender=Article)
 def testSlugAvantSave(sender, instance, *args, **kwargs):
     slugs = [article.slug for article in Article.objects.all() if article != instance]
 
-    print(slugs)
     if instance.slug in slugs:
-        print("entree2")
         instance.slug += "*"
 
 

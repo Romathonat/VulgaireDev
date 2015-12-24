@@ -33,6 +33,7 @@ a:hover {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 20px;
     border-top: 1px solid darkgrey;
 }
 
@@ -134,6 +135,7 @@ hr {
     border-top: 1px solid darkgrey;
 }
 
+
 #content {
     text-align: left;
 }
@@ -176,4 +178,13 @@ hr {
 
 .math-tex {
 font-size: 1.2em;
+}
+
+footer{
+    text-align: center;
+    padding-top: 90px;
+}
+
+.foot{
+    font-size: 0.9em;
 }
