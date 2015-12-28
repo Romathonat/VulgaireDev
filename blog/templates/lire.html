@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1 >{{ article.titre }} </h1>
-    <p class="infosArticle">{{ article.date|date:"DATE_FORMAT" }} | {{ categories }}<br/><br/></p>
+    <p class="infosArticle">{{ article.date|date:"DATE_FORMAT" }} | {{ categories }} par <a href="mailto:{{ article.auteur.email }}"
+                                               target="_top">{{ article.auteur }}</a><br/><br/></p>
     <div class="contenu">{{ article.contenu|safe }}</div>
 {% endblock %}

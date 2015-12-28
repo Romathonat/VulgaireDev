@@ -2,11 +2,11 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from django.contrib.auth.models import User
 # Create your models here.
 class Article(models.Model):
     titre = models.CharField(max_length=100)
-    auteur = models.CharField(max_length=42)
+    auteur = models.ForeignKey(User)
     slug = models.SlugField(max_length=100)
     preview = RichTextUploadingField()
     contenu = RichTextUploadingField()
@@ -20,9 +20,9 @@ class Article(models.Model):
 
 class ArticleProposition(models.Model):
     titre = models.CharField(max_length=100)
-    preview = RichTextUploadingField()
     contenu = RichTextUploadingField()
     categorie = models.ManyToManyField('Categorie')
+    auteur = models.ForeignKey(User)
 
     def __str__(self):
         return self.titre

@@ -2,9 +2,23 @@
 
 {% block content %}
     <h4 align="center">Proposer un article</h4>
-    <form action="{% url "blog.views.proposeArticle" %} method=" post>
-        {% csrf_token %}
-        {{ form.media }}
-        {{ form.as_p }}
-    </form>
+    {% if valide %}
+        <div class="alert alert-sucess">
+            <p>Votre article a bien été envoyé</p>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <p>Attention: L'upload d'image n'est pas activé. Vous pouvez cependant faire
+                des ctrl+c/ctrl+v depuis des images trouvées sur le web (ça prendra le lien vers ces
+                images)</p>
+        </div>
+        <form action="{% url "blog.views.proposeArticle" %}" method="post">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <div class="centreur">
+                <button type="submit" class="btn btn-default">Envoyer</button>
+            </div>
+        </form>
+    {% endif %}
 {% endblock %}

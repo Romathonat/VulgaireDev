@@ -1,13 +1,15 @@
 # coding: utf-8
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-from blog.models import Article, Categorie
+from blog.models import *
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth.decorators import login_required
 from blog.forms import rechercheForm
 import re
 from blog.forms import ContactForm, UtilisateurForm, ArticlePropositionForm
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -107,14 +109,15 @@ def registerUser(request):
     if request.method == 'POST':
         form = UtilisateurForm(request.POST)
 
-        #on recupere les valeurs du formulaire pour les réafficher : si l'authentification est bonne, le formulaire ne s'affiche même pas
+        # on recupere les valeurs du formulaire pour les réafficher : si l'authentification est bonne, le formulaire ne s'affiche même pas
         username = request.POST['username']
         mail = request.POST['mail']
 
         if form.is_valid():
             if request.POST['password'] == request.POST['passwordConfirm']:
                 try:
-                    user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['mail'], form.cleaned_data['password'])
+                    user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['mail'],
+                                                    form.cleaned_data['password'])
                     userCreated = True
                 except IntegrityError:
                     userExist = True
@@ -122,26 +125,25 @@ def registerUser(request):
                 wrongPassword = True
         else:
             error = True
-
     else:
         form = UtilisateurForm()
 
     return render(request, 'registerUser.html', locals())
 
 
+@login_required(login_url='connexion')
 def proposeArticle(request):
     removeNav = True
     if request.method == 'POST':
         form = ArticlePropositionForm(request.POST)
 
         if form.is_valid():
-            form.save()
-        else:
-            data = request.POST
-            sujet = data['sujet']
-            message = data['message']
-            auteur = data['auteur']
-            error = True
+            articleProposition = ArticleProposition(titre=form.cleaned_data['titre'],
+                                                    contenu=form.cleaned_data['contenu'],
+                                                    auteur=request.user)
+            articleProposition.save()
+            articleProposition.categorie.add(*form.cleaned_data['categorie'].all())
+            valide = True
     else:
         form = ArticlePropositionForm()
     return render(request, 'proposeArticle.html', locals())

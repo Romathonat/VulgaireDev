@@ -18,7 +18,9 @@ class UtilisateurForm(forms.Form):
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
     captcha = CaptchaField()
 
+
 class ArticlePropositionForm(forms.ModelForm):
     class Meta:
         model = ArticleProposition
-        fields = '__all__'
+        fields = ('titre','contenu','categorie')
+
