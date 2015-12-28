@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib import admin
 from blog.models import Categorie, Article, ArticleProposition
 from django.shortcuts import render, get_list_or_404, redirect
