@@ -3,6 +3,8 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
+
+
 # Create your models here.
 class Article(models.Model):
     titre = models.CharField(max_length=100)
@@ -15,7 +17,7 @@ class Article(models.Model):
                                 verbose_name="Date de parution")
 
     categorie = models.ManyToManyField('Categorie')
-    def __str__(self):
+    def __unicode__(self):
         return self.titre
 
 class ArticleProposition(models.Model):
@@ -24,7 +26,7 @@ class ArticleProposition(models.Model):
     categorie = models.ManyToManyField('Categorie')
     auteur = models.ForeignKey(User)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.titre
 
 
@@ -39,5 +41,5 @@ def testSlugAvantSave(sender, instance, *args, **kwargs):
 class Categorie(models.Model):
     nom = models.CharField(max_length=30)
     couleur = models.CharField(max_length=30)
-    def __str__(self):
+    def __unicode__(self):
         return self.nom

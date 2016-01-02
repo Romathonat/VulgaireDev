@@ -5,6 +5,7 @@ from blog.models import Categorie, Article, ArticleProposition
 from django.shortcuts import render, get_list_or_404, redirect
 from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
 
 #permet de creer de creer une vue qui créer un article
 class ArticlePropositionAdmin(admin.ModelAdmin):
@@ -25,6 +26,10 @@ class ArticlePropositionAdmin(admin.ModelAdmin):
         #on ajoute les categories(maniere la plus simple de le faire que j'ai trouve)
         article.categorie.add(*articleProposition.categorie.all())
         article.publie = False
+
+        message = "Une nouvelle demande d'article a été postée : http://vulgairedev.fr/admin/blog/articleproposition/"
+        send_mail("Nouvelle demande d'article", message, "VulgaireDev", ['r.mathonat@laposte.net'], fail_silently=False)
+
         return redirect(reverse('admin:index'))
 
 
