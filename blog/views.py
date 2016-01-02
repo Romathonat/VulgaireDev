@@ -143,6 +143,11 @@ def proposeArticle(request):
                                                     auteur=request.user)
             articleProposition.save()
             articleProposition.categorie.add(*form.cleaned_data['categorie'].all())
+
+            #on envoi un mail pour avertir
+            message = "Une nouvelle demande d'article a été postée : http://vulgairedev.fr/admin/blog/articleproposition/"
+            send_mail("Nouvelle demande d'article", message, "VulgaireDev", ['r.mathonat@laposte.net'], fail_silently=False)
+
             valide = True
     else:
         form = ArticlePropositionForm()

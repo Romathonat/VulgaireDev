@@ -27,9 +27,6 @@ class ArticlePropositionAdmin(admin.ModelAdmin):
         article.categorie.add(*articleProposition.categorie.all())
         article.publie = False
 
-        message = "Une nouvelle demande d'article a été postée : http://vulgairedev.fr/admin/blog/articleproposition/"
-        send_mail("Nouvelle demande d'article", message, "VulgaireDev", ['r.mathonat@laposte.net'], fail_silently=False)
-
         return redirect(reverse('admin:index'))
 
 
