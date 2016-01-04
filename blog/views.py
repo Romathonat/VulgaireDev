@@ -1,5 +1,5 @@
 # coding: utf-8
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from blog.models import *
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
@@ -16,6 +16,7 @@ def home(request, page=1):
     paginationArticles = Paginator(articles, 8)
 
     try:
+        page = int(page)
         articles = paginationArticles.page(page).object_list
     except EmptyPage:
         articles = paginationArticles.page(1).object_list
@@ -89,6 +90,8 @@ def contact(request):
             messageValidate = form.cleaned_data['message']
             auteurValidate = form.cleaned_data['auteur']
 
+            messageValidate = messageValidate + " from " + auteurValidate
+
             send_mail(sujetValidate, messageValidate, auteurValidate, ['r.mathonat@laposte.net'], fail_silently=False)
 
             envoi = True
@@ -119,6 +122,7 @@ def registerUser(request):
                     user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['mail'],
                                                     form.cleaned_data['password'])
                     userCreated = True
+                    return redirect(request.GET.get('next', ''))
                 except IntegrityError:
                     userExist = True
             else:
@@ -127,7 +131,6 @@ def registerUser(request):
             error = True
     else:
         form = UtilisateurForm()
-
     return render(request, 'registerUser.html', locals())
 
 

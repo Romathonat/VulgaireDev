@@ -24,7 +24,7 @@
             </p>
         {% endif %}
 
-        <form role="form" action="{% url "blog.views.registerUser" %}" method="post">
+        <form role="form" action="{% url "blog.views.registerUser" %}?next={{ request.GET.next }}" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Nom utilisateur:</label>

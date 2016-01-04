@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h4 align="center">Connexion - <a href="{%url "blog.views.registerUser" %}">Inscription</a></h4>
+    <h4 align="center">Connexion - <a href="{%url "blog.views.registerUser" %}?next={{ request.GET.next }}">Inscription</a></h4>
     <form action="" method="post">
         {% csrf_token %}
         <div class="form-group">
