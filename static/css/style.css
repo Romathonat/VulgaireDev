@@ -21,7 +21,7 @@ a:hover {
     padding-top: 40px;
 }
 
-#separationVerticale {
+.separationVerticale {
     height: 1px;
     margin-left: 90px;
     margin-right: 90px; 
@@ -187,4 +187,8 @@ footer{
 
 .foot{
     font-size: 0.9em;
+}
+
+.commentaires{
+    text-align: center;
 }

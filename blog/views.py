@@ -27,6 +27,7 @@ def home(request, page=1):
 def lire(request, slug):
     articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
     categories = [cat.nom for cat in articles[0].categorie.all()]
+    messages = articles[0].message_set.all()
     tiret = "-"
     categories = tiret.join(categories)
     return render(request, 'lire.html', {'article': articles[0], 'categories': categories})

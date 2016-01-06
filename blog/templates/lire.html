@@ -2,8 +2,18 @@
 
 
 {% block content %}
-    <h1 >{{ article.titre }} </h1>
-    <p class="infosArticle">{{ article.date|date:"DATE_FORMAT" }} | {{ categories }} par <a href="mailto:{{ article.auteur.email }}"
-                                               target="_top">{{ article.auteur }}</a><br/><br/></p>
+    <h1>{{ article.titre }} </h1>
+    <p class="infosArticle">{{ article.date|date:"DATE_FORMAT" }} | {{ categories }} par <a
+            href="mailto:{{ article.auteur.email }}"
+            target="_top">{{ article.auteur }}</a><br/><br/></p>
     <div class="contenu">{{ article.contenu|safe }}</div>
+
+    <div class="separationVerticale"></div>
+    <div class="commentaires">
+
+        <h3>Commentaires</h3>
+    </div>
+    {% for message in messages %}
+
+    {% endfor %}
 {% endblock %}
