@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-"""VulgaireDev URL Configurations
-=======
-"""VulgaireDev URL Configuration poponey
->>>>>>> cdace89ed7c81696ed5126910f5e74df29056a63
+
+"""VulgaireDev URL Configuration
+
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
