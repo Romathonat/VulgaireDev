@@ -14,6 +14,33 @@
         <h3>Commentaires</h3>
     </div>
     {% for message in messages %}
-
+        {% if message.publie %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{ message.auteur }}</strong> <span
+                        class="text-muted">le {{ message.date|date:"DATE_FORMAT" }}</span>
+                </div>
+                <div class="panel-body">
+                    {{ message.contenu }}
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
+    {% if envoi %}
+        <p class="alert alert-success">
+            Votre message a bien été envoyé !
+        </p>
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="contenu">Votre message:</label>
+            <textarea class="form-control" rows="5" id="contenu" name="contenu">{% if envoi %}
+                {{ contenu }}{% endif %}</textarea>
+        </div>
+
+        <div class="centreur">
+            <button type="submit" class="btn btn-default">Envoyer</button>
+        </div>
+    </form>
 {% endblock %}

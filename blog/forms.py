@@ -1,6 +1,6 @@
 from django import forms
 from captcha.fields import CaptchaField
-from blog.models import ArticleProposition
+from blog.models import *
 
 class rechercheForm(forms.Form):
     recherche = forms.CharField(max_length=100)
@@ -24,3 +24,7 @@ class ArticlePropositionForm(forms.ModelForm):
         model = ArticleProposition
         fields = ('titre','contenu','categorie')
 
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('contenu',)

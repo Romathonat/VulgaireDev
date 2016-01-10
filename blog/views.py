@@ -3,13 +3,13 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404, redirec
 from blog.models import *
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
-from blog.forms import rechercheForm
 import re
-from blog.forms import ContactForm, UtilisateurForm, ArticlePropositionForm
+from blog.forms import *
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-
+from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -25,12 +25,66 @@ def home(request, page=1):
 
 
 def lire(request, slug):
+    # on cherche l'article correspondant
     articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
     categories = [cat.nom for cat in articles[0].categorie.all()]
     messages = articles[0].message_set.all()
     tiret = "-"
     categories = tiret.join(categories)
-    return render(request, 'lire.html', {'article': articles[0], 'categories': categories})
+    contenu = ""
+    envoi = False
+
+    # on s'occupe du formulaire pour poster des messages
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            contenu = form.cleaned_data['contenu']
+
+            # si user est authentifier, on envoie le message
+            if (enregistrerMessage(request, articles, contenu)):
+                envoi = True
+            else:
+                # sinon on redirige vers l'authentification
+                # on sauvegarde en variables de session le contenu
+                request.session['contenuMessage'] = contenu
+
+                response = redirect('connexion')
+                response['Location'] += '?next=' + reverse('lire', kwargs={'slug': slug})
+                return response
+
+        else:
+            data = request.POST
+            contenu = data['contenu']
+
+    elif (request.session.get('contenuMessage') != None):
+        if (enregistrerMessage(request, articles, request.session.get('contenuMessage'))):
+            envoi = True
+        del request.session['contenuMessage']
+        form = ContactForm()
+    else:
+        form = ContactForm()
+    return render(request, 'lire.html',
+                  {'article': articles[0], 'categories': categories, 'messages': messages, 'form': form,
+                   'contenu': contenu, 'envoi': envoi})
+
+
+# permet d'enregistrer un message, en testant si user est authentifier
+def enregistrerMessage(request, articles, contenu):
+    if (request.user.is_authenticated()):
+        try:
+            message = Message(auteur=request.user, article=articles[0], publie=False, contenu=contenu)
+            message.save()
+            #on envoie un mail pour notifier qu'il y a un nouveau message
+
+            # on envoi un mail pour avertir
+            message = "Un nouveau message a été posté : http://vulgairedev.fr/admin/blog/message/"
+            send_mail("Nouvelle demande d'article", message, "VulgaireDev", ['r.mathonat@laposte.net'],
+                      fail_silently=False)
+        except IndexError:
+            print("erreur ce slug ne coresspond à aucun article")
+        return True
+    else:
+        return False
 
 
 def categorie(request, nom):
@@ -123,6 +177,8 @@ def registerUser(request):
                     user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['mail'],
                                                     form.cleaned_data['password'])
                     userCreated = True
+                    login(request, authenticate(username=form.cleaned_data['username'],
+                                                password=form.cleaned_data['password']))
                     return redirect(request.GET.get('next', ''))
                 except IntegrityError:
                     userExist = True
@@ -148,9 +204,10 @@ def proposeArticle(request):
             articleProposition.save()
             articleProposition.categorie.add(*form.cleaned_data['categorie'].all())
 
-            #on envoi un mail pour avertir
+            # on envoi un mail pour avertir
             message = "Une nouvelle demande d'article a été postée : http://vulgairedev.fr/admin/blog/articleproposition/"
-            send_mail("Nouvelle demande d'article", message, "VulgaireDev", ['r.mathonat@laposte.net'], fail_silently=False)
+            send_mail("Nouvelle demande d'article", message, "VulgaireDev", ['r.mathonat@laposte.net'],
+                      fail_silently=False)
 
             valide = True
     else:
