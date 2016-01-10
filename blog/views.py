@@ -33,6 +33,7 @@ def lire(request, slug):
         messages = articles[0].message_set.all()
     except :
         pass
+    messages = []
 
     tiret = "-"
     categories = tiret.join(categories)
