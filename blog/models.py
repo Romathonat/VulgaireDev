@@ -37,7 +37,7 @@ class ArticleProposition(models.Model):
     titre = models.CharField(max_length=100)
     contenu = RichTextUploadingField()
     categorie = models.ManyToManyField('Categorie')
-    auteur = models.OneToOneField(User)
+    auteur = models.ForeignKey(User)
 
     def __unicode__(self):
         return self.titre
