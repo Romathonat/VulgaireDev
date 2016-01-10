@@ -15,7 +15,7 @@ class Article(models.Model):
     publie = models.BooleanField()
     date = models.DateTimeField(auto_now_add=True, auto_now=False,
                                 verbose_name="Date de parution")
-
+    date.editable=True
     categorie = models.ManyToManyField('Categorie')
 
     def __unicode__(self):
