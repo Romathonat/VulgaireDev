@@ -3,7 +3,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
-
+from django.utils.timezone import now
 
 # Create your models here.
 class Article(models.Model):
@@ -13,9 +13,7 @@ class Article(models.Model):
     preview = RichTextUploadingField()
     contenu = RichTextUploadingField()
     publie = models.BooleanField()
-    date = models.DateTimeField(auto_now_add=True, auto_now=False,
-                                verbose_name="Date de parution")
-    date.editable=True
+    date = models.DateTimeField(default=now() , verbose_name="Date de parution")
     categorie = models.ManyToManyField('Categorie')
 
     def __unicode__(self):
@@ -61,8 +59,7 @@ class Message(models.Model):
     auteur = models.ForeignKey(User)
     article = models.ForeignKey(Article)
 
-    date = models.DateTimeField(auto_now_add=True, auto_now=False,
-                                verbose_name="Date de parution")
+    date = models.DateTimeField(default=now() , verbose_name="Date de parution")
     publie = models.BooleanField()
     contenu = models.TextField()
 
