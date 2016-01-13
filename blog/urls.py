@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 urlpatterns = patterns('',
-    url(r'^article/(?P<slug>.+)$', 'blog.views.lire'),
+    url(r'^article/(?P<slug>.+)$', 'blog.views.lire', {},'lire'),
     url(r'^categorie/(?P<nom>.+)$', 'blog.views.categorie'),
     url(r'^recherche$', 'blog.views.recherche'),
     url(r'^contact$', 'blog.views.contact'),

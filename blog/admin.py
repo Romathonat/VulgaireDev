@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from blog.models import Categorie, Article, ArticleProposition
+from blog.models import Categorie, Article, ArticleProposition, Message
 from django.shortcuts import render, get_list_or_404, redirect
 from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse
@@ -36,3 +36,4 @@ class ArticlePropositionAdmin(admin.ModelAdmin):
 admin.site.register(Categorie)
 admin.site.register(Article)
 admin.site.register(ArticleProposition, ArticlePropositionAdmin)
+admin.site.register(Message)

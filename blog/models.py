@@ -15,18 +15,13 @@ class Article(models.Model):
     publie = models.BooleanField()
     date = models.DateTimeField(auto_now_add=True, auto_now=False,
                                 verbose_name="Date de parution")
-
+    date.editable=True
     categorie = models.ManyToManyField('Categorie')
+
     def __unicode__(self):
         return self.titre
 
-class ArticleProposition(models.Model):
-    titre = models.CharField(max_length=100)
-    contenu = RichTextUploadingField()
-    categorie = models.ManyToManyField('Categorie')
-    auteur = models.ForeignKey(User)
-
-    def __unicode__(self):
+    def __str__(self):
         return self.titre
 
 
@@ -38,8 +33,41 @@ def testSlugAvantSave(sender, instance, *args, **kwargs):
         instance.slug += "*"
 
 
+class ArticleProposition(models.Model):
+    titre = models.CharField(max_length=100)
+    contenu = RichTextUploadingField()
+    categorie = models.ManyToManyField('Categorie')
+    auteur = models.ForeignKey(User)
+
+    def __unicode__(self):
+        return self.titre
+
+    def __string__(self):
+        return self.titre
+
+
 class Categorie(models.Model):
     nom = models.CharField(max_length=30)
     couleur = models.CharField(max_length=30)
+
     def __unicode__(self):
         return self.nom
+
+    def __str__(self):
+        return self.nom
+
+
+class Message(models.Model):
+    auteur = models.ForeignKey(User)
+    article = models.ForeignKey(Article)
+
+    date = models.DateTimeField(auto_now_add=True, auto_now=False,
+                                verbose_name="Date de parution")
+    publie = models.BooleanField()
+    contenu = models.TextField()
+
+    def __unicode__(self):
+        return self.contenu
+
+    def __str__(self):
+        return self.contenu

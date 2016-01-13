@@ -21,7 +21,7 @@ a:hover {
     padding-top: 40px;
 }
 
-#separationVerticale {
+.separationVerticale {
     height: 1px;
     margin-left: 90px;
     margin-right: 90px; 
@@ -56,15 +56,6 @@ header {
     margin-right: auto;
 }
 
-@font-face {
-    font-family: 'Asap';
-    src: url('Asap-Regular.otf');
-}
-
-@font-face {
-    font-family: 'Electronic';
-    src: url('EHSMB.TTF');
-}
 
 #navigation ul, #navigation li {
     padding-left: 10px;
@@ -118,9 +109,6 @@ p {
     color: rgb(40, 40, 40);
 }
 
-h3 {
-    font-family: Electronic, Calibri, Arial, sans-serif;
-}
 
 h1, h2, h4, h5, h6 {
     font-family: Calibri, Arial, sans-serif;
@@ -187,4 +175,8 @@ footer{
 
 .foot{
     font-size: 0.9em;
+}
+
+.commentaires{
+    text-align: center;
 }
