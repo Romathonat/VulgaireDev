@@ -3,6 +3,9 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+
+from es import addArticle
 
 
 # Create your models here.
@@ -13,9 +16,8 @@ class Article(models.Model):
     preview = RichTextUploadingField()
     contenu = RichTextUploadingField()
     publie = models.BooleanField()
-    date = models.DateTimeField(auto_now_add=True, auto_now=False,
-                                verbose_name="Date de parution")
-    date.editable=True
+    date = models.DateTimeField(default=now() , verbose_name="Date de parution")
+
     categorie = models.ManyToManyField('Categorie')
 
     def __unicode__(self):
@@ -23,6 +25,12 @@ class Article(models.Model):
 
     def __str__(self):
         return self.titre
+
+    def save(self, * args, ** kwargs):
+        ret = super(Article, self).save(* args, ** kwargs)
+        addArticle(self)
+        return ret
+
 
 
 @receiver(pre_save, sender=Article)
