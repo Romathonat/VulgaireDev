@@ -10,6 +10,10 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from blog.myViews.jumpSpecialView import jumpSpecialView
+
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -29,12 +33,10 @@ def lire(request, slug):
     articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
     categories = [cat.nom for cat in articles[0].categorie.all()]
 
-
     try:
         messages = articles[0].message_set.all()
-    except :
+    except:
         messages = []
-
 
     tiret = "-"
     categories = tiret.join(categories)
@@ -47,7 +49,7 @@ def lire(request, slug):
         if form.is_valid():
             contenu = form.cleaned_data['contenu']
 
-            # si user est authentifier, on envoie le message
+            # si user est authentifie, on envoie le message
             if (enregistrerMessage(request, articles, contenu)):
                 envoi = True
             else:
@@ -70,22 +72,29 @@ def lire(request, slug):
         form = ContactForm()
     else:
         form = ContactForm()
+
+    # si cet est article est speciale, on redirige vers la vue souhaitée
+    retour = jumpSpecialView(articles[0].titre, request, articles[0], categories)
+
+    if retour:
+        return retour
+
     return render(request, 'lire.html',
                   {'article': articles[0], 'categories': categories, 'messages': messages, 'form': form,
                    'contenu': contenu, 'envoi': envoi})
 
 
-# permet d'enregistrer un message, en testant si user est authentifier
+# permet d'enregistrer un message, en testant si user est authentifie
 def enregistrerMessage(request, articles, contenu):
     if (request.user.is_authenticated()):
         try:
             message = Message(auteur=request.user, article=articles[0], publie=False, contenu=contenu)
             message.save()
-            #on envoie un mail pour notifier qu'il y a un nouveau message
+            # on envoie un mail pour notifier qu'il y a un nouveau message
 
             # on envoi un mail pour avertir
             message = "Un nouveau message a été posté : http://vulgairedev.fr/admin/blog/message/"
-            send_mail("Nouvelle demande d'article", message, "VulgaireDev", ['r.mathonat@laposte.net'],
+            send_mail("Nouveau message", message, "VulgaireDev", ['r.mathonat@laposte.net'],
                       fail_silently=False)
         except IndexError:
             print("erreur ce slug ne coresspond à aucun article")

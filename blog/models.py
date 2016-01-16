@@ -5,6 +5,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
+
 # Create your models here.
 class Article(models.Model):
     titre = models.CharField(max_length=100)
@@ -13,7 +14,7 @@ class Article(models.Model):
     preview = RichTextUploadingField()
     contenu = RichTextUploadingField()
     publie = models.BooleanField()
-    date = models.DateTimeField(default=now() , verbose_name="Date de parution")
+    date = models.DateTimeField(default=now(), verbose_name="Date de parution")
     categorie = models.ManyToManyField('Categorie')
 
     def __unicode__(self):
@@ -59,7 +60,7 @@ class Message(models.Model):
     auteur = models.ForeignKey(User)
     article = models.ForeignKey(Article)
 
-    date = models.DateTimeField(default=now() , verbose_name="Date de parution")
+    date = models.DateTimeField(default=now(), verbose_name="Date de parution")
     publie = models.BooleanField()
     contenu = models.TextField()
 
