@@ -1,3 +1,4 @@
+# coding: utf-8
 from blog.myViews.lesChiffres import lesChiffres
 
 # un switch case pour rediriger vers la bonne vue:
