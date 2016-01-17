@@ -15,7 +15,7 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
     for (var i = 0; i < nombres.length; i++) {
         if (nombres[i] == aim) {
             solutions.push(deepCopy(solutionCourante));
-            return;
+            return 1;
         }
         //si jamais on arrive pas à la solution, on garde la solution la plus proche qu'on ai trouvé
         if (Math.abs(aim - nombres[i]) < Math.abs(aim - solutionPlusProche[0])) {
@@ -31,7 +31,7 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
 
     //si on arrive à un seul nombre (et qu'il n'est pas aim), on termine
     if (nombres.length == 1) {
-        return;
+        return 0;
     }
 
     //pour tous les nombres disponibles, on liste toutes les façons d'en prendre 2
@@ -51,18 +51,20 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
                     nombres.push(nombre1 + nombre2);
                     solutionCourante.push((nombre1.toString()) +
                         "+" + (nombre2.toString()) + "=" + (nombre1 + nombre2).toString()
-                    )
-                    ;
-                    calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche);
+                    );
+                    if (calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche) === 1) {
+                        return 1;
+                    }
                     solutionCourante.pop();
                     nombres.pop();
 
                     nombres.push(nombre1 - nombre2);
                     solutionCourante.push(nombre1.toString() +
                         "-" + nombre2.toString() + "=" + (nombre1 - nombre2).toString()
-                    )
-                    ;
-                    calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche);
+                    );
+                    if (calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche) === 1) {
+                        return 1;
+                    }
                     solutionCourante.pop();
                     nombres.pop();
 
@@ -70,7 +72,9 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
                     solutionCourante.push(nombre1.toString() +
                         "*" + nombre2.toString() + "=" + (nombre1 * nombre2).toString()
                     );
-                    calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche);
+                    if (calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche) === 1) {
+                        return 1;
+                    }
                     solutionCourante.pop();
                     nombres.pop();
 
@@ -79,7 +83,9 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
                     if (isInt(resultatDivision)) {
                         nombres.push(resultatDivision);
                         solutionCourante.push(Math.max(nombre1, nombre2).toString() + "/" + Math.min(nombre1, nombre2).toString() + "=" + resultatDivision.toString());
-                        calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche);
+                        if (calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche) === 1) {
+                            return 1;
+                        }
                         solutionCourante.pop();
                         nombres.pop();
                     }
@@ -115,8 +121,8 @@ function calculerSolution() {
         solution = solutionPlusProche[1];
         texteTitre = "Solution la plus proche trouvée:"
     }
-    else{
-        texteTitre = "Solution la plus proche trouvée:"
+    else {
+        texteTitre = "Solution:"
     }
 
     document.getElementById("titreSolution").innerHTML = texteTitre;

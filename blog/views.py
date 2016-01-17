@@ -31,10 +31,11 @@ def home(request, page=1):
 def lire(request, slug):
     # on cherche l'article correspondant
     articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
-    categories = [cat.nom for cat in articles[0].categorie.all()]
+    article = articles[0]
+    categories = [cat.nom for cat in article.categorie.all()]
 
     try:
-        messages = articles[0].message_set.all()
+        messages = article.message_set.all()
     except:
         messages = []
 
@@ -73,14 +74,15 @@ def lire(request, slug):
     else:
         form = ContactForm()
 
-    # si cet est article est speciale, on redirige vers la vue souhaitée
-    retour = jumpSpecialView(articles[0].titre, request, articles[0], categories)
+    # si cet est article est special, on redirige vers la vue souhaitée : le comportement est le même mais avec des trucs en plus (genre d'héritage)
+
+    retour = jumpSpecialView(request, locals())
 
     if retour:
         return retour
 
     return render(request, 'lire.html',
-                  {'article': articles[0], 'categories': categories, 'messages': messages, 'form': form,
+                  {'article': article, 'categories': categories, 'messages': messages, 'form': form,
                    'contenu': contenu, 'envoi': envoi})
 
 
