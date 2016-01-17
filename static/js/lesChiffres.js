@@ -90,11 +90,25 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
     }
 }
 
-solutionPlusProche = [0, []];
-solutions = [];
-nombres = [5, 2, 3, 6, 8, 50];
-aim = 598;
-solutionCourante = [];
-calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche);
+function calculerSolution(){
+    var nombres = [];
 
-console.log(solutions[0]);
+    for(var i=0; i<6;i++){
+        nombres.push(document.getElementById("lesChiffresNombre"+(i+1)).value);
+    }
+
+    aim = document.getElementById("aim").value;
+
+    solutionPlusProche = [0, []];
+    solutions = [];
+    solutionCourante = [];
+
+    console.log(nombres);
+
+    calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche);
+
+    document.getElementById("solution").innerHTML = solutions[0].join("</br>");
+
+    //espaceSolution.value = solutions[0];
+
+}
