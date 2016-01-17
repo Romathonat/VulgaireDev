@@ -14,16 +14,18 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
     //on test si on a trouvé le bon nombre
     for (var i = 0; i < nombres.length; i++) {
         if (nombres[i] == aim) {
-            solutions.push(deepCopy(solutionCourante));//probablement une copie profonde à faire ici
+            solutions.push(deepCopy(solutionCourante));
             return;
         }
         //si jamais on arrive pas à la solution, on garde la solution la plus proche qu'on ai trouvé
         if (Math.abs(aim - nombres[i]) < Math.abs(aim - solutionPlusProche[0])) {
             //on remplace l'ancienne valeur
-            solutionPlusProche = [];
+            while (solutionPlusProche.length > 0) {
+                solutionPlusProche.pop();
+            }
 
             solutionPlusProche.push(nombres[i]);
-            solutionPlusProche.push(deepCopy(solutionCourante));//pareil pour copie profonde
+            solutionPlusProche.push(deepCopy(solutionCourante));
         }
     }
 
@@ -37,8 +39,9 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
         if (nombres[i] > 0) {
             for (var j = 0; j < i; j++) {
                 if (nombres[j] > 0) {
-                    var nombre1 = nombres[i];
-                    var nombre2 = nombres[j];
+
+                    var nombre1 = Math.round(nombres[i]);
+                    var nombre2 = Math.round(nombres[j]);
 
                     //on invalide ces deux nombres de la liste en les mettant négatifs
                     nombres[i] = -nombres[i];
@@ -90,11 +93,12 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
     }
 }
 
-function calculerSolution(){
+function calculerSolution() {
+    document.getElementById("titreSolution").innerHTML = "Calcul en cours...";
     var nombres = [];
 
-    for(var i=0; i<6;i++){
-        nombres.push(document.getElementById("lesChiffresNombre"+(i+1)).value);
+    for (var i = 0; i < 6; i++) {
+        nombres.push(document.getElementById("lesChiffresNombre" + (i + 1)).value);
     }
 
     aim = document.getElementById("aim").value;
@@ -103,12 +107,18 @@ function calculerSolution(){
     solutions = [];
     solutionCourante = [];
 
-    console.log(nombres);
-
     calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche);
 
-    document.getElementById("solution").innerHTML = solutions[0].join("</br>");
+    var solution = solutions[0];
+    var texteTitre = "";
+    if (solutions.length === 0) {
+        solution = solutionPlusProche[1];
+        texteTitre = "Solution la plus proche trouvée:"
+    }
+    else{
+        texteTitre = "Solution la plus proche trouvée:"
+    }
 
-    //espaceSolution.value = solutions[0];
-
+    document.getElementById("titreSolution").innerHTML = texteTitre;
+    document.getElementById("solution").innerHTML = solution.join("</br>");
 }
