@@ -11,6 +11,9 @@ from django.db import IntegrityError
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
 
+from es import search_article
+from elasticsearch import ConnectionError
+
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
     paginationArticles = Paginator(articles, 8)
@@ -110,30 +113,33 @@ def recherche(request):
 
             articles = Article.objects.all()
             resultatsRecherche = []
+            try:
+                resultatsRecherche = search_article(search)
+            except ConnectionError:
+                #problème de connection avec ElasticSearch
+                for article in articles:
+                    # les mots du contenu
+                    mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
+                    mots = mots.split(" ")
+                    mots = [mot.lower() for mot in mots]
+                    for mot in mots:
+                        if (mot == search):
+                            appendIfUnique(resultatsRecherche, article)
 
-            for article in articles:
-                # les mots du contenu
-                mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
-                mots = mots.split(" ")
-                mots = [mot.lower() for mot in mots]
-                for mot in mots:
-                    if (mot == search):
-                        appendIfUnique(resultatsRecherche, article)
+                    # les mots du titre
+                    motsTitre = article.titre.split(" ")
+                    motsTitre = [mot.lower() for mot in motsTitre]
+                    for motTitre in motsTitre:
+                        if (motTitre == search):
+                            appendIfUnique(resultatsRecherche, article)
 
-                # les mots du titre
-                motsTitre = article.titre.split(" ")
-                motsTitre = [mot.lower() for mot in motsTitre]
-                for motTitre in motsTitre:
-                    if (motTitre == search):
-                        appendIfUnique(resultatsRecherche, article)
-
-                # les mots de la preview
-                motsPreview = re.sub(r'<.*?>|&nbsp;', ' ', article.preview)
-                motsPreview = motsPreview.split(" ")
-                motsPreview = [mot.lower() for mot in motsPreview]
-                for motPreview in motsPreview:
-                    if (motPreview == search):
-                        appendIfUnique(resultatsRecherche, article)
+                    # les mots de la preview
+                    motsPreview = re.sub(r'<.*?>|&nbsp;', ' ', article.preview)
+                    motsPreview = motsPreview.split(" ")
+                    motsPreview = [mot.lower() for mot in motsPreview]
+                    for motPreview in motsPreview:
+                        if (motPreview == search):
+                            appendIfUnique(resultatsRecherche, article)
 
     return render(request, 'recherche.html', locals())
 

@@ -5,8 +5,6 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
-from es import addArticle
-
 
 # Create your models here.
 class Article(models.Model):
@@ -25,12 +23,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.titre
-
-    def save(self, * args, ** kwargs):
-        ret = super(Article, self).save(* args, ** kwargs)
-        addArticle(self)
-        return ret
-
 
 
 @receiver(pre_save, sender=Article)

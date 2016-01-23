@@ -7,6 +7,8 @@ from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 
+from es import regenerate_article_index
+
 
 # permet de creer de creer une vue qui créer un article : on herite de modelAdmin pour modifier
 class ArticlePropositionAdmin(admin.ModelAdmin):
@@ -33,7 +35,23 @@ class ArticlePropositionAdmin(admin.ModelAdmin):
         return redirect(reverse('admin:index'))
 
 
+
+class ArticleAdmin(admin.ModelAdmin):
+
+    def get_urls(self):
+        urls = super(ArticleAdmin, self).get_urls()
+        my_urls = patterns('',
+                           (r'^regenerate_article_index/$', self.admin_site.admin_view(self.rege_article_index)),
+                           )
+        return my_urls + urls
+
+    def rege_article_index(self, index):
+        regenerate_article_index()
+        print('test')
+        return redirect(reverse('admin:index'))
+
+
 admin.site.register(Categorie)
-admin.site.register(Article)
+admin.site.register(Article, ArticleAdmin)
 admin.site.register(ArticleProposition, ArticlePropositionAdmin)
 admin.site.register(Message)
