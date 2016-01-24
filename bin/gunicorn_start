@@ -1,9 +1,11 @@
 #!/bin/bash
 NAME="vulgaireDev"                                  # Name of the application
 DJANGODIR=/webapps/VulgaireDev/            # Django project directory
+ESDIR=/
 USER=webUser                                        # the user to run as
 GROUP=webapps                                     # the group to run as
 NUM_WORKERS=3                                     # how many worker processes should Gunicorn spawn
+
 
 echo "Starting $NAME as `whoami`"
 
@@ -13,13 +15,10 @@ source /home/webUser/.profile
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
+cd $ESDIR
+exec bin/elasticsearch
 cd $DJANGODIR
 exec gunicorn VulgaireDev.wsgi \
   --name $NAME \
   --workers $NUM_WORKERS \
   --user=$USER \
-
-
-
-
-
