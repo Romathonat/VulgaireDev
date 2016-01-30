@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -60,7 +61,7 @@ class Message(models.Model):
     auteur = models.ForeignKey(User)
     article = models.ForeignKey(Article)
 
-    date = models.DateTimeField(default=now(), verbose_name="Date de parution")
+    date = models.DateTimeField(default=now, verbose_name="Date de parution")
     publie = models.BooleanField()
     contenu = models.TextField()
 
