@@ -53,6 +53,7 @@ def lire(request, slug):
             # si user est authentifie, on envoie le message
             if (enregistrerMessage(request, articles, contenu)):
                 envoi = True
+                contenu = ""
             else:
                 # sinon on redirige vers l'authentification
                 # on sauvegarde en variables de session le contenu

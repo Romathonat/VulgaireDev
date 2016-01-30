@@ -58,9 +58,9 @@ function calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche
                     solutionCourante.pop();
                     nombres.pop();
 
-                    nombres.push(nombre1 - nombre2);
-                    solutionCourante.push(nombre1.toString() +
-                        "-" + nombre2.toString() + "=" + (nombre1 - nombre2).toString()
+                    nombres.push(Math.max(nombre1, nombre2) - Math.min(nombre1, nombre2));
+                    solutionCourante.push(Math.max(nombre1, nombre2).toString() +
+                        "-" + Math.min(nombre1, nombre2).toString() + "=" + (Math.max(nombre1, nombre2) - Math.min(nombre1, nombre2)).toString()
                     );
                     if (calculRec(nombres, aim, solutionCourante, solutions, solutionPlusProche) === 1) {
                         return 1;
