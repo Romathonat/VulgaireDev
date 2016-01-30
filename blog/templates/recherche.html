@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Recherche</h1>
+    <h1 align="center">Recherche</h1>
     {% for article in resultatsRecherche %}
         <div class="article">
             <h3><a href="{% url "blog.views.lire" article.slug %}">{{ article.titre }}</a>
