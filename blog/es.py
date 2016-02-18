@@ -33,6 +33,7 @@ def search_article(terms):
     return results
 
 def regenerate_article_index():
+    
     if es.indices.exists(index='article'):
         es.indices.delete(index='article')
     create_indexes()

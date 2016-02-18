@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 from blog.myViews.jumpSpecialView import jumpSpecialView
 
 
-from es import search_article
+from blog.es import search_article
 from elasticsearch import ConnectionError
 
 def home(request, page=1):
@@ -129,6 +129,7 @@ def recherche(request):
                 resultatsRecherche = search_article(search)
             except ConnectionError:
                 #problème de connection avec ElasticSearch
+                print("Pas de co elastic")
                 for article in articles:
                     # les mots du contenu
                     mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)

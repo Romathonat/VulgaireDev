@@ -6,8 +6,7 @@ from django.shortcuts import render, get_list_or_404, redirect
 from django.conf.urls import patterns, url
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
-
-from es import regenerate_article_index
+from blog.es import regenerate_article_index
 
 
 # permet de creer de creer une vue qui créer un article : on herite de modelAdmin pour modifier
