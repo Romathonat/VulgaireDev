@@ -1,5 +1,5 @@
 """
-WSGI config for VulgaireDev project.
+WSGI config for VulgaireDev project. blabla
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
