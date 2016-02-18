@@ -9,7 +9,7 @@ NUM_WORKERS=3                                     # how many worker processes sh
 echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
-source /var/www/.virtualenvs/virtualVulgaireDev/bin/activate
+source /root/.virtualenvs/virtualVulgaireDev/bin/activate
 source /home/webuser/.profile
 
 # Start your Django Unicorn
