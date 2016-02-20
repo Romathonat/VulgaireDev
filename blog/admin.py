@@ -9,7 +9,7 @@ from django.core.mail import send_mail
 from blog.es import regenerate_article_index
 
 
-# permet de creer de creer une vue qui créer un article : on herite de modelAdmin pour modifier
+# permet de créer de creer une vue qui créer un article : on herite de modelAdmin pour modifier
 class ArticlePropositionAdmin(admin.ModelAdmin):
     review_template = 'admin/blog/article/'
 
