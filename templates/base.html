@@ -7,6 +7,7 @@
             src="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js' %}"></script>
     <link rel="stylesheet" type="text/css"
           href="{% static 'ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/monokai_sublime.css' %}"/>
+
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript"
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -18,7 +19,8 @@
     <link href="{% static 'css/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
-    <title>{% block title %}Un Vulgaire Developpeur{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+    <title>{% block title %}Vulgaire Developpeur{% endblock %}</title>
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;

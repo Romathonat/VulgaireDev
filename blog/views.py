@@ -14,9 +14,9 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from blog.myViews.jumpSpecialView import jumpSpecialView
 
-
 from blog.es import search_article
 from elasticsearch import ConnectionError
+
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -128,7 +128,7 @@ def recherche(request):
             try:
                 resultatsRecherche = search_article(search)
             except ConnectionError:
-                #problème de connection avec ElasticSearch
+                # problème de connection avec ElasticSearch
                 print("Pas de co elastic")
                 for article in articles:
                     # les mots du contenu
