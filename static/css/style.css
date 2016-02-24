@@ -8,6 +8,9 @@ a:hover {
     color: rgb(244, 122, 0);
 }
 
+code{
+    text-align: left;
+}
 #banniere {
     height: 440px;
     background: url('../images/vulgaireDevelopeurTaille.png') no-repeat center;

@@ -10,6 +10,12 @@
     {% block ajout %}
     {% endblock %}
 
+    <div class="centreur">
+        <a href="{% url "blog.views.generatePDF" article.slug %}">
+            <button class="btn btn-warning">Telecharger cet article en PDF</button>
+        </a>
+    </div>
+
     <div class="separationVerticale"></div>
     <div class="commentaires">
 

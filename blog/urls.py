@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^registerUser$', 'blog.views.registerUser'),
     url(r'^connexion$', auth_views.login, {'template_name': 'connexion.html'}, 'connexion'),
     url(r'^deconnexion$', auth_views.logout, {'template_name': ''}, 'deconnexion'),
+    url(r'^generatePDF/(?P<slug>.+)$', 'blog.views.generatePDF'),
     url('^(?P<page>.+)$', 'blog.views.home'),
     url('^$', 'blog.views.home'),
     )+ static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)

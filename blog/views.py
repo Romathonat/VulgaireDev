@@ -17,6 +17,10 @@ from blog.myViews.jumpSpecialView import jumpSpecialView
 from blog.es import search_article
 from elasticsearch import ConnectionError
 
+from django.template.loader import get_template
+from django.http import HttpResponse
+from weasyprint import HTML
+from django.template import RequestContext
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -239,3 +243,22 @@ def proposeArticle(request):
     else:
         form = ArticlePropositionForm()
     return render(request, 'proposeArticle.html', locals())
+
+def generatePDF(request, slug):
+    #on recupere l'article correspondant au slug
+    articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
+    article = articles[0]
+    categories = [cat.nom for cat in article.categorie.all()]
+
+    template = get_template("templatePDF.html")
+
+    context = {'article': article, 'categories': categories}
+    html = template.render(context)
+
+    response = HttpResponse(content_type="application/pdf")
+    #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+
+    HTML(string=html,  base_url=request.build_absolute_uri()).write_pdf(response)
+
+    return response
+
