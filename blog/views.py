@@ -21,6 +21,7 @@ from django.template.loader import get_template
 from django.http import HttpResponse
 from weasyprint import HTML
 from django.template import RequestContext
+import VulgaireDev.settings
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -257,6 +258,8 @@ def generatePDF(request, slug):
 
     response = HttpResponse(content_type="application/pdf")
     #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+
+    print("tttttt"+request.build_absolute_uri())
 
     HTML(string=html,  base_url=request.build_absolute_uri()).write_pdf(response)
 
