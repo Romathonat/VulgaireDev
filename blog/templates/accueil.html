@@ -3,11 +3,21 @@
 {% block content %}
     {% for article in articles %}
         <div class="article">
-            <h3><a href="{% url "blog.views.lire" article.slug %}">{{ article.titre }}</a>
 
-                <p class="infosArticle">par <a href="mailto:{{ article.auteur.email }}"
-                                               target="_top">{{ article.auteur }}</a><br/><br/></p>
-            </h3>
+            <h3><a href="{% url "blog.views.lire" article.slug %}">{{ article.titre }}</a></h3>
+
+            <div class="well well-sm">
+                <span class="label label-default">Date</span>
+                {{ article.date|date:"DATE_FORMAT" }}
+                <span class="label label-default">Catégories</span>
+                {% for categorie in article.categorie.all %}
+                    <a href="{% url "blog.views.categorie" categorie.nom %}">{{ categorie }}</a>
+                    {% if not forloop.last %}/
+                    {% endif %}
+                {% endfor %}
+                par <a href="mailto:{{ article.auteur.email }}" target="_top">{{ article.auteur }}</a>
+            </div>
+
             <p>
                 {{ article.preview|safe }}
             </p>

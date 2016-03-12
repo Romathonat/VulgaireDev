@@ -33,6 +33,7 @@ def home(request, page=1):
     except EmptyPage:
         articles = paginationArticles.page(1).object_list
 
+
     return render(request, "accueil.html", locals())
 
 
