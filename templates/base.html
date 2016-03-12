@@ -98,7 +98,7 @@
             {% if user.is_authenticated %}
                 <p class="centreur foot">Connecté en tant que {{ user.get_username }}. <a
                         href="{% url "deconnexion" %}?next={{ request.path }}">Deconnexion</a>
-                </p>(
+                </p>
             {% else %}
                 <p class="centreur foot">Bienvenue. <a
                         href="{% url "connexion" %}?next={{ request.path }}">Connexion</a></p>
