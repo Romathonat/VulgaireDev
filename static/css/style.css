@@ -18,15 +18,15 @@ code{
     position: relative;
     width: 80%;
     height: 0;
-    padding-top: 35%;
+    padding-top: 40%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 15px;
 }
 
 #content {
-    padding-left: 90px;
-    padding-right: 90px;
+    padding-left: 60px;
+    padding-right: 60px;
     padding-top: 40px;
 }
 
@@ -191,4 +191,9 @@ footer {
 
 #nombresDisponibles {
     margin-bottom: 50px;
+}
+
+.monContainer{
+    padding-left: 10%;
+    padding-right: 10%;
 }
