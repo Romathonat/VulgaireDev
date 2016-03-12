@@ -116,7 +116,7 @@ def enregistrerMessage(request, articles, contenu):
 
 def categorie(request, nom):
     categorie = get_object_or_404(Categorie, nom=nom)
-    articles = Article.objects.filter(categorie=categorie, publie=True)
+    articles = Article.objects.filter(categorie=categorie, publie=True).order_by('-date')
     return render(request, 'categorie.html', locals())
 
 
