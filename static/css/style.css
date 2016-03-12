@@ -11,11 +11,17 @@ a:hover {
 code{
     text-align: left;
 }
+
 #banniere {
-    height: 440px;
     background: url('../images/vulgaireDevelopeurTaille.png') no-repeat center;
+    background-size:contain;
     position: relative;
-    margin-bottom: 25px;
+    width: 80%;
+    height: 0;
+    padding-top: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
 }
 
 #content {
@@ -74,11 +80,12 @@ ul#listeCategories {
 li.categories {
     text-indent: 15px;
     padding: 3px 0px 3px 10px;
+    white-space: nowrap;
 }
 
 .lienCategorie {
     vertical-align: middle;
-    opacity: 1 display : inline-block;
+    opacity: 1;
 }
 
 .puce {

@@ -259,9 +259,8 @@ def generatePDF(request, slug):
     response = HttpResponse(content_type="application/pdf")
     #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
 
-    print("tttttt"+request.build_absolute_uri())
 
-    HTML(string=html,  base_url=request.build_absolute_uri()).write_pdf(response)
+    HTML(string=html,  base_url="http://www.vulgairedev.fr").write_pdf(response)
 
     return response
 
