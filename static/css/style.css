@@ -16,7 +16,7 @@ code{
     background: url('../images/vulgaireDevelopeurTaille.png') no-repeat center;
     background-size:contain;
     position: relative;
-    width: 80%;
+    width: 70%;
     height: 0;
     padding-top: 40%;
     margin-left: auto;
@@ -28,6 +28,11 @@ code{
     padding-left: 60px;
     padding-right: 60px;
     padding-top: 40px;
+}
+
+.monContainer{
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
 .separationVerticale {
@@ -193,7 +198,3 @@ footer {
     margin-bottom: 50px;
 }
 
-.monContainer{
-    padding-left: 10%;
-    padding-right: 10%;
-}
