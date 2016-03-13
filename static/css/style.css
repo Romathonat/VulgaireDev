@@ -21,7 +21,9 @@ code{
     height: 0;
     padding-top: 33%;
 
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
 }
 
 #content {
@@ -31,7 +33,7 @@ code{
 }
 
 .monContainer{
-    padding-left: 5%;
+    padding-left: 1%;
     padding-right: 1%;
 }
 
@@ -40,6 +42,7 @@ code{
     margin-left: 90px;
     margin-right: 90px;
     margin-top: 20px;
+
     border-top: 1px solid darkgrey;
 }
 
