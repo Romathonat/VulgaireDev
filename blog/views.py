@@ -53,7 +53,8 @@ def lire(request, slug):
     categories = tiret.join(categories)
     contenu = ""
     envoi = False
-    # si cet est article est special, on redirige vers la vue souhaitée : le comportement est le même mais avec des trucs en plus (genre d'héritage)
+    # si cet est article est special, on redirige vers la vue souhaitée :
+    # le comportement est le même mais avec des trucs en plus (genre d'héritage)
 
     retour = jumpSpecialView(request, locals())
 
