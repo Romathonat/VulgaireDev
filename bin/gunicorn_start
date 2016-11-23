@@ -9,7 +9,7 @@ echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
 source /webApps/.virtualenvs/virtualVulgaireDev/bin/activate
-source /home/webuser/.profile
+source /webApps/.profile
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
