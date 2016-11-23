@@ -3,6 +3,7 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404, redirec
 from blog.models import *
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
+import os
 import re
 from blog.forms import *
 from django.core.mail import send_mail
@@ -54,11 +55,12 @@ def lire(request, slug):
     if retour:
         return retour
 
-    urlGitHub = article.urlGitHub;
+    url_GitHub = article.urlGitHub;
 
-    if urlGitHub != '':
-        response = requests.get('https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/' + urlGitHub,
-                     auth=HTTPBasicAuth('Romathonat', 'Souirnarlor45'))
+    if url_GitHub != '':
+        password_github = os.environ.get('GITHUB_PASSWORD')
+        response = requests.get('https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/' + url_GitHub,
+                     auth=HTTPBasicAuth('Romathonat', password_github))
 
         if response.status_code < 300:
             rndr = HtmlRenderer()
@@ -69,7 +71,7 @@ def lire(request, slug):
 
         return render(request, 'markdown.html',
                       {'article': article, 'categories': categories,
-                       'contenu': contenu, 'envoi': envoi, 'article_markdown': article_markdown})
+                       'contenu': contenu, 'envoi': envoi, 'article_markdown': article_markdown, 'url_github': url_GitHub})
     else:
         return render(request, 'lire.html',
                       {'article': article, 'categories': categories,
@@ -94,7 +96,7 @@ def recherche(request):
 
             articles = Article.objects.all()
             resultatsRecherche = []
-            
+
             for article in articles:
                 # les mots du contenu
                mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
@@ -170,4 +172,3 @@ def generatePDF(request, slug):
     # response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
 
     return response
-

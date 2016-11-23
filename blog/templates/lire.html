@@ -3,33 +3,29 @@
 
 {% block content %}
 
-    <h1>{{ article.titre }} </h1>
-    <div class="well well-sm">
-                <span class="label label-default">Date</span>
-                {{ article.date|date:"DATE_FORMAT" }}
-                <span class="label label-default">Catégories</span>
-                {% for categorie in article.categorie.all %}
-                    <a href="{% url "blog.views.categorie" categorie.nom %}">{{ categorie }}</a>
-                    {% if not forloop.last %}/
-                    {% endif %}
-                {% endfor %}
-                par <a href="mailto:{{ article.auteur.email }}" target="_top">{{ article.auteur }}</a>
-            </div>
-    <div class="contenu">{{ article.contenu|safe }}</div>
-    {% block ajout %}
-    {% endblock %}
+<h1>{{ article.titre }} </h1>
+<div class="well well-sm">
+    <span class="label label-default">Date</span>
+    {{ article.date|date:"DATE_FORMAT" }}
+    <span class="label label-default">Catégories</span>
+    {% for categorie in article.categorie.all %}
+    <a href="{% url "blog.views.categorie" categorie.nom %}">{{ categorie }}</a>
+    {% if not forloop.last %}/
+    {% endif %}
+    {% endfor %}
+    par <a href="mailto:{{ article.auteur.email }}" target="_top">{{ article.auteur }}</a>
 
-    <div class="centreur">
-        <a href="{% url "blog.views.generatePDF" article.slug %}">
-            <button class="btn btn-warning">Telecharger cet article en PDF</button>
-        </a>
-    </div>
+    <a class="editGithub" href="https://github.com/Romathonat/vulgaireDevEntries/{{url_github}}">Edit on Github</a>
 
-    <div class="separationVerticale"></div>
-    <div class="commentaires">
+</div>
+<div class="contenu">{{ article.contenu|safe }}</div>
+{% block ajout %}
+{% endblock %}
 
-        <h3>Commentaires</h3>
-    </div>
+<div class="separationVerticale"></div>
+<div class="commentaires">
+    <h3>Commentaires</h3>
+</div>
 
 {% load disqus_tags %}
 {% disqus_dev %}

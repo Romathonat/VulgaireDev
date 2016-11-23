@@ -8,6 +8,18 @@ a:hover {
     color: rgb(244, 122, 0);
 }
 
+a:link {
+    color: rgb(244, 122, 0);
+}
+
+a:active {
+    color: rgb(244, 122, 0) !important;
+}
+
+p > a:visited {
+    color: rgb(180, 80, 0);
+}
+
 code{
     text-align: left;
 }
@@ -201,3 +213,19 @@ footer {
     margin-bottom: 50px;
 }
 
+.editGithub{
+    float: right;
+    vertical-align: middle;
+    background-color: white;
+    border: 1px solid rgb(200,200,200);
+    color: rgb(100,100,100) !important;
+    font-size: 80%;
+    padding: 2px 8px 2px 8px;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.editGithub:hover{
+    text-decoration: none;
+}
