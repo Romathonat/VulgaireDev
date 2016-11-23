@@ -14,6 +14,7 @@ class Article(models.Model):
     slug = models.SlugField(max_length=100)
     preview = RichTextUploadingField()
     contenu = RichTextUploadingField()
+    urlGitHub = models.CharField(default='', max_length=200, null=True, blank=True)
     publie = models.BooleanField()
     date = models.DateTimeField(default=now(), verbose_name="Date de parution")
     categorie = models.ManyToManyField('Categorie')
@@ -70,3 +71,4 @@ class Message(models.Model):
 
     def __str__(self):
         return self.contenu
+

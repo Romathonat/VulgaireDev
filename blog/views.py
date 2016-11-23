@@ -14,14 +14,14 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from blog.myViews.jumpSpecialView import jumpSpecialView
 
-from blog.es import search_article
-from elasticsearch import ConnectionError
-
 from django.template.loader import get_template
 from django.http import HttpResponse
-from weasyprint import HTML
 from django.template import RequestContext
 import VulgaireDev.settings
+
+import requests
+from requests.auth import HTTPBasicAuth
+from misaka import Markdown, HtmlRenderer
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -33,7 +33,6 @@ def home(request, page=1):
     except EmptyPage:
         articles = paginationArticles.page(1).object_list
 
-
     return render(request, "accueil.html", locals())
 
 
@@ -43,47 +42,11 @@ def lire(request, slug):
     article = articles[0]
     categories = [cat.nom for cat in article.categorie.all()]
 
-    try:
-        messages = article.message_set.all()
-    except:
-        messages = []
 
     tiret = "-"
     categories = tiret.join(categories)
     contenu = ""
     envoi = False
-
-    # on s'occupe du formulaire pour poster des messages
-    if request.method == "POST":
-        form = MessageForm(request.POST)
-        if form.is_valid():
-            contenu = form.cleaned_data['contenu']
-
-            # si user est authentifie, on envoie le message
-            if (enregistrerMessage(request, articles, contenu)):
-                envoi = True
-                contenu = ""
-            else:
-                # sinon on redirige vers l'authentification
-                # on sauvegarde en variables de session le contenu
-                request.session['contenuMessage'] = contenu
-
-                response = redirect('connexion')
-                response['Location'] += '?next=' + reverse('lire', kwargs={'slug': slug})
-                return response
-
-        else:
-            data = request.POST
-            contenu = data['contenu']
-
-    elif (request.session.get('contenuMessage') != None):
-        if (enregistrerMessage(request, articles, request.session.get('contenuMessage'))):
-            envoi = True
-        del request.session['contenuMessage']
-        form = ContactForm()
-    else:
-        form = ContactForm()
-
     # si cet est article est special, on redirige vers la vue souhaitée : le comportement est le même mais avec des trucs en plus (genre d'héritage)
 
     retour = jumpSpecialView(request, locals())
@@ -91,28 +54,28 @@ def lire(request, slug):
     if retour:
         return retour
 
-    return render(request, 'lire.html',
-                  {'article': article, 'categories': categories, 'messages': messages, 'form': form,
-                   'contenu': contenu, 'envoi': envoi})
+    urlGitHub = article.urlGitHub;
 
+    if urlGitHub != '':
+        response = requests.get('https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/' + urlGitHub,
+                     auth=HTTPBasicAuth('Romathonat', 'Souirnarlor45'))
 
-# permet d'enregistrer un message, en testant si user est authentifie
-def enregistrerMessage(request, articles, contenu):
-    if (request.user.is_authenticated()):
-        try:
-            message = Message(auteur=request.user, article=articles[0], publie=False, contenu=contenu)
-            message.save()
-            # on envoie un mail pour notifier qu'il y a un nouveau message
+        if response.status_code < 300:
+            rndr = HtmlRenderer()
+            md = Markdown(rndr, extensions=('fenced-code',))
+            article_markdown = md(response.content.decode('utf-8'))
+        else:
+            article_markdown = "Error calling the GitHub API! Maybe there was too much requests today."
 
-            # on envoi un mail pour avertir
-            message = "Un nouveau message a été posté : http://vulgairedev.fr/admin/blog/message/"
-            send_mail("Nouveau message", message, "VulgaireDev", ['r.mathonat@laposte.net'],
-                      fail_silently=False)
-        except IndexError:
-            print("erreur ce slug ne coresspond à aucun article")
-        return True
+        return render(request, 'markdown.html',
+                      {'article': article, 'categories': categories,
+                       'contenu': contenu, 'envoi': envoi, 'article_markdown': article_markdown})
     else:
-        return False
+        return render(request, 'lire.html',
+                      {'article': article, 'categories': categories,
+                       'contenu': contenu, 'envoi': envoi})
+
+
 
 
 def categorie(request, nom):
@@ -131,34 +94,30 @@ def recherche(request):
 
             articles = Article.objects.all()
             resultatsRecherche = []
-            try:
-                resultatsRecherche = search_article(search)
-            except ConnectionError:
-                # problème de connection avec ElasticSearch
-                print("Pas de co elastic")
-                for article in articles:
-                    # les mots du contenu
-                    mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
-                    mots = mots.split(" ")
-                    mots = [mot.lower() for mot in mots]
-                    for mot in mots:
-                        if (mot == search):
-                            appendIfUnique(resultatsRecherche, article)
+            
+            for article in articles:
+                # les mots du contenu
+               mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
+               mots = mots.split(" ")
+               mots = [mot.lower() for mot in mots]
+               for mot in mots:
+                   if (mot == search):
+                       appendIfUnique(resultatsRecherche, article)
 
-                    # les mots du titre
-                    motsTitre = article.titre.split(" ")
-                    motsTitre = [mot.lower() for mot in motsTitre]
-                    for motTitre in motsTitre:
-                        if (motTitre == search):
-                            appendIfUnique(resultatsRecherche, article)
+               # les mots du titre
+               motsTitre = article.titre.split(" ")
+               motsTitre = [mot.lower() for mot in motsTitre]
+               for motTitre in motsTitre:
+                   if (motTitre == search):
+                       appendIfUnique(resultatsRecherche, article)
 
-                    # les mots de la preview
-                    motsPreview = re.sub(r'<.*?>|&nbsp;', ' ', article.preview)
-                    motsPreview = motsPreview.split(" ")
-                    motsPreview = [mot.lower() for mot in motsPreview]
-                    for motPreview in motsPreview:
-                        if (motPreview == search):
-                            appendIfUnique(resultatsRecherche, article)
+                # les mots de la preview
+               motsPreview = re.sub(r'<.*?>|&nbsp;', ' ', article.preview)
+               motsPreview = motsPreview.split(" ")
+               motsPreview = [mot.lower() for mot in motsPreview]
+               for mot in motsPreview:
+                   if (motsPreview == search):
+                       appendIfUnique(resultatsRecherche, article)
 
     return render(request, 'recherche.html', locals())
 
@@ -195,59 +154,9 @@ def contact(request):
     return render(request, 'contact.html', locals())
 
 
-def registerUser(request):
-    if request.method == 'POST':
-        form = UtilisateurForm(request.POST)
-
-        # on recupere les valeurs du formulaire pour les réafficher : si l'authentification est bonne, le formulaire ne s'affiche même pas
-        username = request.POST['username']
-        mail = request.POST['mail']
-
-        if form.is_valid():
-            if request.POST['password'] == request.POST['passwordConfirm']:
-                try:
-                    user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['mail'],
-                                                    form.cleaned_data['password'])
-                    userCreated = True
-                    login(request, authenticate(username=form.cleaned_data['username'],
-                                                password=form.cleaned_data['password']))
-                    return redirect(request.GET.get('next', ''))
-                except IntegrityError:
-                    userExist = True
-            else:
-                wrongPassword = True
-        else:
-            error = True
-    else:
-        form = UtilisateurForm()
-    return render(request, 'registerUser.html', locals())
-
-
-@login_required(login_url='connexion')
-def proposeArticle(request):
-    removeNav = True
-    if request.method == 'POST':
-        form = ArticlePropositionForm(request.POST)
-
-        if form.is_valid():
-            articleProposition = ArticleProposition(titre=form.cleaned_data['titre'],
-                                                    contenu=form.cleaned_data['contenu'],
-                                                    auteur=request.user)
-            articleProposition.save()
-            articleProposition.categorie.add(*form.cleaned_data['categorie'].all())
-
-            # on envoi un mail pour avertir
-            message = "Une nouvelle demande d'article a été postée : http://vulgairedev.fr/admin/blog/articleproposition/"
-            send_mail("Nouvelle demande d'article", message, "VulgaireDev", ['r.mathonat@laposte.net'],
-                      fail_silently=False)
-
-            valide = True
-    else:
-        form = ArticlePropositionForm()
-    return render(request, 'proposeArticle.html', locals())
 
 def generatePDF(request, slug):
-    #on recupere l'article correspondant au slug
+    # on recupere l'article correspondant au slug
     articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
     article = articles[0]
     categories = [cat.nom for cat in article.categorie.all()]
@@ -258,10 +167,7 @@ def generatePDF(request, slug):
     html = template.render(context)
 
     response = HttpResponse(content_type="application/pdf")
-    #response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
-
-
-    HTML(string=html,  base_url="http://www.vulgairedev.fr").write_pdf(response)
+    # response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
 
     return response
 

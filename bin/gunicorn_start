@@ -1,16 +1,15 @@
 #!/bin/bash
 NAME="VulgaireDev"                                  # Name of the application
-DJANGODIR=/webapps/VulgaireDev/            # Django project directory
-USER=webuser                                        # the user to run as
-GROUP=webapps                                     # the group to run as
+DJANGODIR=/webApps/VulgaireDev/            # Django project directory
+USER=webUser                                        # the user to run as
 NUM_WORKERS=3                                     # how many worker processes should Gunicorn spawn
 
 
 echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment
-source /var/www/.virtualenvs/virtualVulgaireDev/bin/activate
-source /home/webuser/.profile
+source /webApps/.virtualenvs/virtualVulgaireDev/bin/activate
+#source /home/webuser/.profile
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)

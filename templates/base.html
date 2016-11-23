@@ -65,7 +65,7 @@
 
             <ul>
                 <li class="list-group-item">
-                    <div class="centreur"><a href="{% url "blog.views.proposeArticle" %}"> Proposer un Article</a></div>
+                    <div class="centreur"><a href="https://github.com/Romathonat/vulgaireDevEntries"> Proposer un Article</a></div>
                 </li>
             </ul>
             <ul class="list-group contact">
@@ -93,23 +93,15 @@
             {% block content %}{% endblock %}
         </section>
     </div>
-    <div class="row">
-        <footer class="col-sm-12">
-            {% if user.is_authenticated %}
-                <p class="centreur foot">Connecté en tant que {{ user.get_username }}. <a
-                        href="{% url "deconnexion" %}?next={{ request.path }}">Deconnexion</a>
-                </p>
-            {% else %}
-                <p class="centreur foot">Bienvenue. <a
-                        href="{% url "connexion" %}?next={{ request.path }}">Connexion</a></p>
-            {% endif %}
-        </footer>
-    </div>
+
 </div>
 </body>
 
 {% block ajoutJSFin %}
 {% endblock %}
+
+{% load disqus_tags %}
+{% disqus_dev %}
 
 {% if removeNav %}
     <script type="text/javascript"
