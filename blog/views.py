@@ -38,9 +38,9 @@ def home(request, page=1):
 
 def get_article_from_github(url_GitHub):
     password_github = os.environ.get('GITHUB_PASSWORD')
-    response = requests.get(\
-        'https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/'\
-        + url_GitHub, auth=HTTPBasicAuth('Romathonat', password_github))
+    response = requests.get('https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/' + url_GitHub,
+                 auth=HTTPBasicAuth('Romathonat', password_github))
+    return response
 
 def lire(request, slug):
     # on cherche l'article correspondant
@@ -53,8 +53,7 @@ def lire(request, slug):
     categories = tiret.join(categories)
     contenu = ""
     envoi = False
-    # si cet est article est special, on redirige vers la vue souhaitée :
-    # le comportement est le même mais avec des trucs en plus (genre d'héritage)
+    # si cet est article est special, on redirige vers la vue souhaitée : le comportement est le même mais avec des trucs en plus (genre d'héritage)
 
     retour = jumpSpecialView(request, locals())
 
@@ -64,7 +63,7 @@ def lire(request, slug):
     url_GitHub = article.urlGitHub;
 
     if url_GitHub != '':
-
+        response = get_article_from_github(url_GitHub)
 
         if response.status_code < 300:
             rndr = HtmlRenderer()
