@@ -36,6 +36,11 @@ def home(request, page=1):
 
     return render(request, "accueil.html", locals())
 
+def get_article_from_github(url_GitHub):
+    password_github = os.environ.get('GITHUB_PASSWORD')
+    response = requests.get(\
+    'https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/'\
+     + url_GitHub, auth=HTTPBasicAuth('Romathonat', password_github))
 
 def lire(request, slug):
     # on cherche l'article correspondant
@@ -58,9 +63,7 @@ def lire(request, slug):
     url_GitHub = article.urlGitHub;
 
     if url_GitHub != '':
-        password_github = os.environ.get('GITHUB_PASSWORD')
-        response = requests.get('https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/' + url_GitHub,
-                     auth=HTTPBasicAuth('Romathonat', password_github))
+
 
         if response.status_code < 300:
             rndr = HtmlRenderer()
@@ -99,27 +102,27 @@ def recherche(request):
 
             for article in articles:
                 # les mots du contenu
-               mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
-               mots = mots.split(" ")
-               mots = [mot.lower() for mot in mots]
-               for mot in mots:
-                   if (mot == search):
-                       appendIfUnique(resultatsRecherche, article)
+                mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
+                mots = mots.split(" ")
+                mots = [mot.lower() for mot in mots]
+                for mot in mots:
+                    if (mot == search):
+                        appendIfUnique(resultatsRecherche, article)
 
                # les mots du titre
-               motsTitre = article.titre.split(" ")
-               motsTitre = [mot.lower() for mot in motsTitre]
-               for motTitre in motsTitre:
-                   if (motTitre == search):
-                       appendIfUnique(resultatsRecherche, article)
+                motsTitre = article.titre.split(" ")
+                motsTitre = [mot.lower() for mot in motsTitre]
+                for motTitre in motsTitre:
+                    if (motTitre == search):
+                        appendIfUnique(resultatsRecherche, article)
 
                 # les mots de la preview
-               motsPreview = re.sub(r'<.*?>|&nbsp;', ' ', article.preview)
-               motsPreview = motsPreview.split(" ")
-               motsPreview = [mot.lower() for mot in motsPreview]
-               for mot in motsPreview:
-                   if (motsPreview == search):
-                       appendIfUnique(resultatsRecherche, article)
+                motsPreview = re.sub(r'<.*?>|&nbsp;', ' ', article.preview)
+                motsPreview = motsPreview.split(" ")
+                motsPreview = [mot.lower() for mot in motsPreview]
+                for mot in motsPreview:
+                    if (motsPreview == search):
+                        appendIfUnique(resultatsRecherche, article)
 
     return render(request, 'recherche.html', locals())
 

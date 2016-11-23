@@ -1,3 +1,4 @@
 VulgaireDev/settings.py
 *.pyc
 blog/migrations/*
+.idead
