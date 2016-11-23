@@ -38,7 +38,7 @@ def home(request, page=1):
 
 def get_article_from_github(url_GitHub):
     password_github = os.environ.get('GITHUB_PASSWORD')
-    response = requests.get(\ 
+    response = requests.get(\
         'https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/'\
         + url_GitHub, auth=HTTPBasicAuth('Romathonat', password_github))
 
