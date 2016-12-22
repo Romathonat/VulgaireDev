@@ -160,7 +160,6 @@ def contact(request):
     return render(request, 'contact.html', locals())
 
 
-
 def generatePDF(request, slug):
     # on recupere l'article correspondant au slug
     articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
