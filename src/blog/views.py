@@ -82,8 +82,6 @@ def lire(request, slug):
                        'contenu': contenu, 'envoi': envoi})
 
 
-
-
 def categorie(request, nom):
     categorie = get_object_or_404(Categorie, nom=nom)
     articles = Article.objects.filter(categorie=categorie, publie=True).order_by('-date')
@@ -134,44 +132,6 @@ def appendIfUnique(list, ajout):
 
 
 def contact(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-
-        if form.is_valid():
-            sujetValidate = form.cleaned_data['sujet']
-            messageValidate = form.cleaned_data['message']
-            auteurValidate = form.cleaned_data['auteur']
-
-            messageValidate = messageValidate + " from " + auteurValidate
-
-            send_mail(sujetValidate, messageValidate, auteurValidate, ['r.mathonat@laposte.net'], fail_silently=False)
-
-            envoi = True
-        else:
-            data = request.POST
-            sujet = data['sujet']
-            message = data['message']
-            auteur = data['auteur']
-            error = True
-    else:
-
-        form = ContactForm()
-
-    return render(request, 'contact.html', locals())
+    return render(request, 'contact.html')
 
 
-def generatePDF(request, slug):
-    # on recupere l'article correspondant au slug
-    articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
-    article = articles[0]
-    categories = [cat.nom for cat in article.categorie.all()]
-
-    template = get_template("templatePDF.html")
-
-    context = {'article': article, 'categories': categories}
-    html = template.render(context)
-
-    response = HttpResponse(content_type="application/pdf")
-    # response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
-
-    return response

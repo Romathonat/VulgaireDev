@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     url(r'^recherche$', 'blog.views.recherche'),
     url(r'^proposeArticle$', TemplateView.as_view(template_name='proposeArticle.html'), name='proposeArticle'),
     url(r'^contact$', 'blog.views.contact'),
-    url(r'^generatePDF/(?P<slug>.+)$', 'blog.views.generatePDF'),
     url('^(?P<page>.+)$', 'blog.views.home'),
     url('^$', 'blog.views.home'),
     )+ static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
