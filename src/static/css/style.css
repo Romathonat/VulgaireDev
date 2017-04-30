@@ -68,13 +68,23 @@ code{
 }
 
 #navigation {
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-top: 40px;
     text-align: center;
+
+}
+
+.menu_interne{
     border: 1px solid lightgrey;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 40px;
     background-color: #f8f8f8;
+}
+
+.fa {
+    padding: 5px;
 }
 
 header {
