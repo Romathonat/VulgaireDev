@@ -22,8 +22,8 @@
                 {{ article.preview|safe }}
             </p>
 
-            <p><a href="{% url "blog.views.lire" article.slug %}">Lire la suite</a></p>
-            <hr/>
+            <p><a href="{% url "blog.views.lire" article.slug %}">Lire la suite</a><br><br></p>
+
         </div>
     {% endfor %}
 

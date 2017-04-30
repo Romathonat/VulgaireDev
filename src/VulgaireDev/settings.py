@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hey-edw@8v$v0a=hm$@c5k2m9ai-(rcj_4zy3ec6e9@-eo3#xeur8bibiche'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['www.vulgairedev.fr',
                  '.vulgairedev.fr',
@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'vulgairedev',
         'USER': 'vulgairedev',
         'PASSWORD': 'Souirnarlor45',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '',
     }
 }
@@ -126,7 +126,6 @@ EMAIL_HOST_PASSWORD = 'souirnarlor'
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATIC_ROOT = ''
 
 STATICFILES_DIRS = [

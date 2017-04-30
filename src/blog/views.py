@@ -40,7 +40,7 @@ def get_article_from_github(url_GitHub):
     password_github = os.environ.get('GITHUB_PASSWORD')
     print(password_github)
     response = requests.get('https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/' + url_GitHub,
-                 auth=HTTPBasicAuth('Romathonat', password_github))
+                 auth=HTTPBasicAuth('Romathonat', 'Souirnarlor45'))
     return response
 
 def lire(request, slug):

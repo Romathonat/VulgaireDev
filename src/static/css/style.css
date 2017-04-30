@@ -68,11 +68,13 @@ code{
 }
 
 #navigation {
-    border-left: 1px solid darkgrey;
-    padding-left: 30px;
-    padding-right: 45px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
     margin-top: 40px;
     text-align: center;
+    border: 1px solid lightgrey;
+    background-color: #f8f8f8;
 }
 
 header {
@@ -87,7 +89,6 @@ header {
 }
 
 #navigation ul, #navigation li {
-    padding-left: 10px;
     text-align: left;
 }
 
@@ -99,7 +100,7 @@ ul#listeCategories {
 
 li.categories {
     text-indent: 15px;
-    padding: 3px 0px 3px 10px;
+    padding: 3px 0px 3px 0px;
     white-space: nowrap;
 }
 

@@ -33,20 +33,16 @@
 
 <div class="container monContainer">
     <div class="row">
-        <div class="separationVerticale"></div>
         <nav id="navigation" class="col-sm-3 col-sm-push-9 col-xs-8 col-xs-push-2">
             <h3>Catégories</h3>
 
             {% affichageCategories %}
 
-            <div id="separationVerticale2"></div>
             <h3>Derniers articles</h3>
 
             {% affichageDerniersArticles %}
 
-            <div id="separationVerticale2"></div>
-
-            <ul>
+            <ul class="list-group">
                 <li class="list-group-item">
                     <div class="centreur"><a href="{% url 'proposeArticle' %}"> Proposer un Article</a></div>
                 </li>
@@ -56,8 +52,6 @@
                     <div class="centreur"><a href="{% url "blog.views.contact" %}"> A propos</a></div>
                 </li>
             </ul>
-
-            <div id="separationVerticale2"></div>
 
 
             <form class="input-group recherche" action="{% url "blog.views.recherche" %}" method="post">
