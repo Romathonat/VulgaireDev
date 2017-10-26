@@ -1,28 +1,17 @@
 # coding: utf-8
-from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
-from blog.models import *
-from django.core.paginator import Paginator, EmptyPage
-from django.contrib.auth.decorators import login_required
-import os
 import re
-from blog.forms import *
-from django.core.mail import send_mail
-from django.contrib.auth.models import User
-from django.db import IntegrityError
-from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from blog.myViews.jumpSpecialView import jumpSpecialView
-
-from django.template.loader import get_template
-from django.http import HttpResponse
-from django.template import RequestContext
-import VulgaireDev.settings
 
 import requests
 from requests.auth import HTTPBasicAuth
 from misaka import Markdown, HtmlRenderer
+
+from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage
+
+from blog.forms import rechercheForm
+from blog.myViews.jumpSpecialView import jumpSpecialView
+from blog.models import Article, Categorie
+
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
@@ -36,32 +25,40 @@ def home(request, page=1):
 
     return render(request, "accueil.html", locals())
 
+
 def get_article_from_github(url_GitHub):
-    password_github = os.environ.get('GITHUB_PASSWORD')
-    print(password_github)
-    response = requests.get('https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/master/' + url_GitHub,
-                 auth=HTTPBasicAuth('Romathonat', '5$IX"{{xX}.6m"wk'))
+    url = (
+            'https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/'
+            'master/{}'.format(url_GitHub)
+    )
+
+    response = requests.get(
+                url,
+                auth=HTTPBasicAuth('Romathonat', '5$IX"{{xX}.6m"wk')
+                )
     return response
+
 
 def lire(request, slug):
     # on cherche l'article correspondant
-    articles = get_list_or_404(Article, slug=slug, publie=True)  # si jamais plusieurs fois le même slug
+    # si jamais plusieurs fois le même slug
+    articles = get_list_or_404(Article, slug=slug, publie=True)
     article = articles[0]
     categories = [cat.nom for cat in article.categorie.all()]
-
 
     tiret = "-"
     categories = tiret.join(categories)
     contenu = ""
     envoi = False
-    # si cet est article est special, on redirige vers la vue souhaitée : le comportement est le même mais avec des trucs en plus (genre d'héritage)
+    # si cet est article est special, on redirige vers la vue souhaitée : le
+    # comportement est le même mais avec des trucs en plus (genre d'héritage)
 
     retour = jumpSpecialView(request, locals())
 
     if retour:
         return retour
 
-    url_GitHub = article.urlGitHub;
+    url_GitHub = article.urlGitHub
 
     if url_GitHub != '':
         response = get_article_from_github(url_GitHub)
@@ -71,11 +68,19 @@ def lire(request, slug):
             md = Markdown(rndr, extensions=('fenced-code',))
             article_markdown = md(response.content.decode('utf-8'))
         else:
-            article_markdown = "Error calling the GitHub API! Maybe there was too much requests today."
+            article_markdown = (
+               'Error calling the GitHub API! Maybe there was too much '
+               'requests today.'
+            )
 
-        return render(request, 'markdown.html',
-                      {'article': article, 'categories': categories,
-                       'contenu': contenu, 'envoi': envoi, 'article_markdown': article_markdown, 'url_github': url_GitHub})
+        return render(request, 'markdown.html', {
+                        'article': article,
+                        'categories': categories,
+                        'contenu': contenu,
+                        'envoi': envoi,
+                        'article_markdown': article_markdown,
+                        'url_github': url_GitHub
+               })
     else:
         return render(request, 'lire.html',
                       {'article': article, 'categories': categories,
@@ -84,7 +89,11 @@ def lire(request, slug):
 
 def categorie(request, nom):
     categorie = get_object_or_404(Categorie, nom=nom)
-    articles = Article.objects.filter(categorie=categorie, publie=True).order_by('-date')
+    articles = Article.objects.filter(
+                    categorie=categorie,
+                    publie=True
+               ).order_by('-date')
+
     return render(request, 'categorie.html', locals())
 
 
@@ -108,7 +117,7 @@ def recherche(request):
                     if (mot == search):
                         appendIfUnique(resultatsRecherche, article)
 
-               # les mots du titre
+                # les mots du titre
                 motsTitre = article.titre.split(" ")
                 motsTitre = [mot.lower() for mot in motsTitre]
                 for motTitre in motsTitre:
@@ -133,5 +142,3 @@ def appendIfUnique(list, ajout):
 
 def contact(request):
     return render(request, 'contact.html')
-
-

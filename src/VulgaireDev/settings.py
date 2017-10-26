@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 import sys,os
 
+import requests_cache
+
 sys.path.insert(1, os.path.dirname(os.path.realpath(__file__)))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -101,6 +102,10 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+# Request cache
+requests_cache.install_cache(cache_name='github_cache', backend='sqlite',
+                             expire_after=120)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
