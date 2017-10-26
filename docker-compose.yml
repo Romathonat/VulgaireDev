@@ -15,11 +15,9 @@ services:
   web:
     build: .
     container_name: django
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn VulgaireDev.wsgi -b 0.0.0.0:8000"
     depends_on:
       - db
     volumes:
-      - ./src:/src
       - ./src/static:/src/static
       - ./src/media:/src/media
     expose:
@@ -30,7 +28,6 @@ services:
     container_name: mysql
     volumes:
       - ./mysql:/docker-entrypoint-initdb.d
-     # - ./db_data:/var/lib/mysql
     environment:
        MYSQL_ROOT_PASSWORD: Souirnarlor45
        MYSQL_DATABASE: vulgairedev 

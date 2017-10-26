@@ -30,7 +30,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['www.vulgairedev.fr',
                  '.vulgairedev.fr',
-		'127.0.0.1','localhost']
+		'127.0.0.1','localhost', 'web']
 
 
 # Application definition
