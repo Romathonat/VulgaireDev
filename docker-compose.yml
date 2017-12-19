@@ -12,6 +12,7 @@ services:
       - ./config/nginx:/etc/nginx/conf.d
     depends_on:
       - web
+
   web:
     build: .
     container_name: django

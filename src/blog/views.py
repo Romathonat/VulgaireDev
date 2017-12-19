@@ -51,7 +51,7 @@ def lire(request, slug):
     contenu = ""
     envoi = False
     # si cet est article est special, on redirige vers la vue souhaitée : le
-    # comportement est le même mais avec des trucs en plus (genre d'héritage)
+    # comportement est le même mais avec des trucs en plus 
 
     retour = jumpSpecialView(request, locals())
 
@@ -65,7 +65,7 @@ def lire(request, slug):
 
         if response.status_code < 300:
             rndr = HtmlRenderer()
-            md = Markdown(rndr, extensions=('fenced-code',))
+            md = Markdown(rndr, extensions=('fenced-code', 'math'))
             article_markdown = md(response.content.decode('utf-8'))
         else:
             article_markdown = (
