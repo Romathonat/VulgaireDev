@@ -50,4 +50,3 @@ requests-cache
 six==1.10.0
 tinycss==0.3
 urllib3==1.15.1
-WeasyPrint==0.27

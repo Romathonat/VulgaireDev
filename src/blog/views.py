@@ -51,12 +51,7 @@ def lire(request, slug):
     contenu = ""
     envoi = False
     # si cet est article est special, on redirige vers la vue souhaitée : le
-    # comportement est le même mais avec des trucs en plus 
-
-    retour = jumpSpecialView(request, locals())
-
-    if retour:
-        return retour
+    # comportement est le même mais avec des trucs en plus
 
     url_GitHub = article.urlGitHub
 
@@ -72,6 +67,11 @@ def lire(request, slug):
                'Error calling the GitHub API! Maybe there was too much '
                'requests today.'
             )
+
+        retour = jumpSpecialView(request, locals())
+
+        if retour:
+            return retour
 
         return render(request, 'markdown.html', {
                         'article': article,
