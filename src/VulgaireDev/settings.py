@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-import sys,os
+import sys
+import os
 
 import requests_cache
 
@@ -27,11 +28,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hey-edw@8v$v0a=hm$@c5k2m9ai-(rcj_4zy3ec6e9@-eo3#xeur8bibiche'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True 
 
 ALLOWED_HOSTS = ['www.vulgairedev.fr',
-                 '.vulgairedev.fr',
-		'127.0.0.1','localhost', 'web']
+                 '.vulgairedev.fr', '127.0.0.1', 'localhost', 'web']
 
 
 # Application definition
@@ -45,9 +45,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ckeditor',
-    'ckeditor_uploader',
-    'captcha',
     'VulgaireDev.templatetags',
     'VulgaireDev',
     'blog',
@@ -70,7 +67,7 @@ ROOT_URLCONF = 'VulgaireDev.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'VulgaireDev.wsgi.application'
+# WSGI_APPLICATION = 'VulgaireDev.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -120,7 +117,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-#mails
+# mails
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -139,29 +136,6 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
-CKEDITOR_RESTRICT_BY_USER = True
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar':[['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
-                ['Undo', 'Redo'],
-                ['Link', 'Unlink', 'Anchor'],
-                ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
-                ['Source'],
-                ['Maximize', 'Resize'],
-                ['Bold', 'Italic', 'Underline', 'Strike',
-                 'Subscript', 'Superscript'],
-                ['NumberedList', 'BulletedList', '-',
-                 'Outdent', 'Indent'],
-                ['Styles', 'Format'],['CodeSnippet', 'Mathjax'],
-                [ 'Preview' ]],
-        'extraPlugins': 'codesnippet,eqneditor,image2,mathjax',
-        'codeSnippet_theme': 'monokai_sublime',
-    },
-}
-
 LOGIN_URL = '/connexion/'
 
 WKHTMLTOPDF_CMD_OPTIONS = {

@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 
-# Create your models here.
 class Article(models.Model):
     titre = models.CharField(max_length=100)
     auteur = models.ForeignKey(User)
