@@ -1,5 +1,0 @@
-<ul class="list-group">
-    {% for article in derniers_articles %}
-        <li class="list-group-item "><div class="centreur"><a href="{% url "blog.views.lire" article.slug %}"> {{ article.titre }} </a></div></li>
-    {% endfor %}
-</ul>
