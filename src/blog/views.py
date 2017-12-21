@@ -55,36 +55,31 @@ def lire(request, slug):
 
     url_GitHub = article.urlGitHub
 
-    if url_GitHub != '':
-        response = get_article_from_github(url_GitHub)
+    response = get_article_from_github(url_GitHub)
 
-        if response.status_code < 300:
-            rndr = HtmlRenderer()
-            md = Markdown(rndr, extensions=('fenced-code', 'math'))
-            article_markdown = md(response.content.decode('utf-8'))
-        else:
-            article_markdown = (
-               'Error calling the GitHub API! Maybe there was too much '
-               'requests today.'
-            )
-
-        retour = jumpSpecialView(request, locals())
-
-        if retour:
-            return retour
-
-        return render(request, 'markdown.html', {
-                        'article': article,
-                        'categories': categories,
-                        'contenu': contenu,
-                        'envoi': envoi,
-                        'article_markdown': article_markdown,
-                        'url_github': url_GitHub
-               })
+    if response.status_code < 300:
+        rndr = HtmlRenderer()
+        md = Markdown(rndr, extensions=('fenced-code', 'math'))
+        article_markdown = md(response.content.decode('utf-8'))
     else:
-        return render(request, 'lire.html',
-                      {'article': article, 'categories': categories,
-                       'contenu': contenu, 'envoi': envoi})
+        article_markdown = (
+           'Error calling the GitHub API! Maybe there was too much '
+           'requests today.'
+        )
+
+    retour = jumpSpecialView(request, locals())
+
+    if retour:
+        return retour
+
+    return render(request, 'markdown.html', {
+                    'article': article,
+                    'categories': categories,
+                    'contenu': contenu,
+                    'envoi': envoi,
+                    'article_markdown': article_markdown,
+                    'url_github': url_GitHub
+           })
 
 
 def categorie(request, nom):
