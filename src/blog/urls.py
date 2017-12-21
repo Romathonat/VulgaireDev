@@ -8,6 +8,6 @@ urlpatterns = patterns(
     url(r'^categorie/(?P<nom>.+)$', 'blog.views.categorie'),
     url(r'^recherche$', 'blog.views.recherche'),
     url(r'^contact$', 'blog.views.contact'),
-    url('^(?P<page>.+)$', 'blog.views.home'),
-    url('^$', 'blog.views.home'),
+    url(r'^(?P<page>.+)$', 'blog.views.home'),
+    url(r'^$', 'blog.views.home'),
     ) + static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)

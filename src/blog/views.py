@@ -104,14 +104,6 @@ def recherche(request):
             resultatsRecherche = []
 
             for article in articles:
-                # les mots du contenu
-                mots = re.sub(r'<.*?>|&nbsp;', ' ', article.contenu)
-                mots = mots.split(" ")
-                mots = [mot.lower() for mot in mots]
-                for mot in mots:
-                    if (mot == search):
-                        appendIfUnique(resultatsRecherche, article)
-
                 # les mots du titre
                 motsTitre = article.titre.split(" ")
                 motsTitre = [mot.lower() for mot in motsTitre]

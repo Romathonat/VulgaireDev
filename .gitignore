@@ -3,6 +3,7 @@ VulgaireDev/settings.py
 src/blog/migrations/*
 .idead
 TODO
+*.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
