@@ -15,13 +15,13 @@ from blog.models import Article, Categorie
 
 def home(request, page=1):
     articles = Article.objects.filter(publie=True).order_by("-date")
-    paginationArticles = Paginator(articles, 8)
+    pagination_articles = Paginator(articles, 8)
 
     try:
         page = int(page)
-        articles = paginationArticles.page(page).object_list
+        articles = pagination_articles.page(page).object_list
     except EmptyPage:
-        articles = paginationArticles.page(1).object_list
+        articles = pagination_articles.page(1).object_list
 
     return render(request, "accueil.html", locals())
 

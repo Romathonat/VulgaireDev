@@ -10,9 +10,6 @@
 
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript"
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-    <script type="text/javascript"
             src="{% static 'js/modifsPersos.js' %}">
     </script>
 
@@ -43,11 +40,6 @@
 
             {% affichageDerniersArticles %}
 
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <div class="centreur"><a href="{% url 'proposeArticle' %}"> Proposer un Article</a></div>
-                </li>
-            </ul>
             <ul class="list-group contact">
                 <li class="list-group-item">
                     <div class="centreur"><a href="{% url "blog.views.contact" %}"> A propos</a></div>

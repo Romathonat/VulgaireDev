@@ -7,4 +7,5 @@ do
 done
 echo "coucou"
 
-python manage.py makemigrations && python manage.py migrate && gunicorn VulgaireDev.wsgi -b 0.0.0.0:8000 
+python manage.py makemigrations && python manage.py makemigrations blog && python manage.py migrate 
+gunicorn VulgaireDev.wsgi -b 0.0.0.0:8000 
