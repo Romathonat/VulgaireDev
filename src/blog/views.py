@@ -9,7 +9,7 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
 
 from blog.forms import rechercheForm
-from blog.myViews.jumpSpecialView import jumpSpecialView
+from blog.myViews.jumpSpecialView import jump_special_view
 from blog.models import Article, Categorie
 
 
@@ -40,21 +40,14 @@ def get_article_from_github(url_GitHub):
 
 
 def lire(request, slug):
-    # on cherche l'article correspondant
-    # si jamais plusieurs fois le même slug
     articles = get_list_or_404(Article, slug=slug, publie=True)
     article = articles[0]
     categories = [cat.nom for cat in article.categorie.all()]
 
     tiret = "-"
     categories = tiret.join(categories)
-    contenu = ""
-    envoi = False
-    # si cet est article est special, on redirige vers la vue souhaitée : le
-    # comportement est le même mais avec des trucs en plus
 
     url_GitHub = article.urlGitHub
-
     response = get_article_from_github(url_GitHub)
 
     if response.status_code < 300:
@@ -63,11 +56,11 @@ def lire(request, slug):
         article_markdown = md(response.content.decode('utf-8'))
     else:
         article_markdown = (
-           'Error calling the GitHub API! Maybe there was too much '
-           'requests today.'
+           'Error calling the GitHub API!'
         )
-
-    retour = jumpSpecialView(request, locals())
+    # for some special posts, I have written js code, so we use specific
+    # template
+    retour = jump_special_view(request, locals())
 
     if retour:
         return retour
@@ -75,8 +68,6 @@ def lire(request, slug):
     return render(request, 'markdown.html', {
                     'article': article,
                     'categories': categories,
-                    'contenu': contenu,
-                    'envoi': envoi,
                     'article_markdown': article_markdown,
                     'url_github': url_GitHub
            })

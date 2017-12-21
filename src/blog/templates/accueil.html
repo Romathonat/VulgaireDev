@@ -29,7 +29,7 @@
 
     <div class="centreur">
         <ul class="pagination">
-            {% for page in paginationArticles.page_range %}
+            {% for page in pagination_articles.page_range %}
                 <li><a href="{% url "blog.views.home" page %}">{{ page }}</a></li>
             {% endfor %}
         </ul>
