@@ -1,5 +1,6 @@
 # coding: utf-8
 import re
+import os
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -32,14 +33,16 @@ def get_article_from_github(url_GitHub):
             'master/{}'.format(url_GitHub)
     )
 
+    GITHUB_PASSWORD = os.environ.get("VULGAIREDEV_DB_PASSWORD", '')
+
     response = requests.get(
                 url,
-                auth=HTTPBasicAuth('Romathonat', '5$IX"{{xX}.6m"wk')
+                auth=HTTPBasicAuth('Romathonat', GITHUB_PASSWORD)
                 )
     return response
 
 
-def lire(request, slug):
+def read(request, slug):
     articles = get_list_or_404(Article, slug=slug, publie=True)
     article = articles[0]
     categories = [cat.nom for cat in article.categorie.all()]
@@ -58,8 +61,7 @@ def lire(request, slug):
         article_markdown = (
            'Error calling the GitHub API!'
         )
-    # for some special posts, I have written js code, so we use specific
-    # template
+    # for some special posts, we use js code, so we use specific template
     retour = jump_special_view(request, locals())
 
     if retour:
@@ -73,8 +75,8 @@ def lire(request, slug):
            })
 
 
-def categorie(request, nom):
-    categorie = get_object_or_404(Categorie, nom=nom)
+def categorie(request, name):
+    categorie = get_object_or_404(Categorie, nom=name)
     articles = Article.objects.filter(
                     categorie=categorie,
                     publie=True
@@ -83,7 +85,7 @@ def categorie(request, nom):
     return render(request, 'categorie.html', locals())
 
 
-def recherche(request):
+def search(request):
     if request.method == "POST":
         form = rechercheForm(request.POST)
         if form.is_valid():

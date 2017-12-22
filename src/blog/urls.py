@@ -4,9 +4,9 @@ from django.conf.urls.static import static
 
 urlpatterns = patterns(
     '',
-    url(r'^article/(?P<slug>.+)$', 'blog.views.lire', {}, 'lire'),
+    url(r'^article/(?P<slug>.+)$', 'blog.views.read', {}, 'read'),
     url(r'^categorie/(?P<nom>.+)$', 'blog.views.categorie'),
-    url(r'^recherche$', 'blog.views.recherche'),
+    url(r'^recherche$', 'blog.views.search'),
     url(r'^contact$', 'blog.views.contact'),
     url(r'^(?P<page>.+)$', 'blog.views.home'),
     url(r'^$', 'blog.views.home'),

@@ -23,14 +23,18 @@ services:
       - ./src/media:/src/media
     expose:
       - "8000"
-
+    environment:
+      VULGAIREDEV_SECRET_KEY: ${VULGAIREDEV_SECRET_KEY}
+      VULGAIREDEV_DB_PASSWORD: ${VULGAIREDEV_DB_PASSWORD}
+      VULGAIREDEV_GMAIL_PASSWORD: ${VULGAIREDEV_GMAIL_PASSWORD}
+      GITHUB_PASSWORD: ${GITHUB_PASSWORD}
   db:
     image: mysql:5.7
     container_name: db
     volumes:
       - ./mysql:/docker-entrypoint-initdb.d
     environment:
-       MYSQL_ROOT_PASSWORD: Souirnarlor45
+       MYSQL_ROOT_PASSWORD: ${VULGAIREDEV_DB_PASSWORD}
        MYSQL_DATABASE: vulgairedev 
        MYSQL_USER: vulgairedev 
-       MYSQL_PASSWORD: Souirnarlor45 
+       MYSQL_PASSWORD: ${VULGAIREDEV_DB_PASSWORD} 

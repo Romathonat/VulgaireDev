@@ -4,7 +4,7 @@
     {% for article in articles %}
         <div class="article">
 
-            <h3><a href="{% url "blog.views.lire" article.slug %}">{{ article.titre }}</a></h3>
+            <h3><a href="{% url "blog.views.read" article.slug %}">{{ article.titre }}</a></h3>
 
             <div class="well well-sm">
                 <span class="label label-default">Date</span>
@@ -22,7 +22,7 @@
                 {{ article.preview|safe }}
             </p>
 
-            <p><a href="{% url "blog.views.lire" article.slug %}">Lire la suite</a><br><br></p>
+            <p><a href="{% url "blog.views.read" article.slug %}">Lire la suite</a><br><br></p>
 
         </div>
     {% endfor %}

@@ -25,10 +25,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hey-edw@8v$v0a=hm$@c5k2m9ai-(rcj_4zy3ec6e9@-eo3#xeur8bibiche'
+SECRET_KEY = os.environ.get("VULGAIREDEV_SECRET_KEY", '')
+VULGAIREDEV_DB_PASSWORD = os.environ.get("VULGAIREDEV_DB_PASSWORD", '')
+VULGAIREDEV_GMAIL_PASSWORD = os.environ.get("VULGAIREDEV_DB_PASSWORD", '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = True
 
 ALLOWED_HOSTS = ['www.vulgairedev.fr',
                  '.vulgairedev.fr', '127.0.0.1', 'localhost', 'web']
@@ -87,14 +89,12 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-VULGAIREDEV_DB_PASSWORD = os.environ.get("VULGAIREDEV_DB_PASSWORD", '')
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vulgairedev',
         'USER': 'vulgairedev',
-        'PASSWORD': 'Souirnarlor45',
+        'PASSWORD': VULGAIREDEV_DB_PASSWORD,
         'HOST': 'db',
         'PORT': '',
     }
@@ -122,7 +122,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'vulgairedev@gmail.com '
-EMAIL_HOST_PASSWORD = 'souirnarlor'
+EMAIL_HOST_PASSWORD = VULGAIREDEV_GMAIL_PASSWORD
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <script type="text/javascript"
+            src="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript"
             src="{% static 'js/modifsPersos.js' %}">
@@ -44,7 +46,8 @@
             </ul>
 
 
-            <form class="input-group recherche" action="{% url "blog.views.recherche" %}" method="post">
+            <form class="input-group recherche" action="{% url
+                "blog.views.search" %}" method="post">
                 {% csrf_token %}
                 <input type="text" class="search-query form-control" name="recherche" id="id_recherche"
                        placeholder="Recherche"/>
