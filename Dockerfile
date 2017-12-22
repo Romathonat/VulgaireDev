@@ -1,4 +1,4 @@
-FROM python:3.5  
+FROM python:3.5
 ENV PYTHONUNBUFFERED 1  
 
 RUN mkdir /config  
@@ -9,6 +9,7 @@ RUN mkdir /src
 
 RUN apt-get update
 RUN apt-get install -y netcat
+
 ADD ./src /src
 ADD ./launch_web.sh ./src
 
