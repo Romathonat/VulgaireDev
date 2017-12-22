@@ -3,7 +3,7 @@
 This repo holds the code for http://vulgairedev.fr
 
 It uses **Django** with **mysql** and **nginx** as webserver.
-All the project is orchestrated by **docker-compose**, and each of the previous component run inside a docker image.
+All the project is orchestrated by **docker-compose**, and each of the previous components run inside a docker image.
 
 ## Blog posts
 
