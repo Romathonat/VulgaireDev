@@ -33,7 +33,7 @@ def get_article_from_github(url_GitHub):
             'master/{}'.format(url_GitHub)
     )
 
-    GITHUB_PASSWORD = os.environ.get("VULGAIREDEV_DB_PASSWORD", '')
+    GITHUB_PASSWORD = os.environ.get("GITHUB_PASSWORD", '')
 
     response = requests.get(
                 url,

@@ -138,11 +138,8 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_URL = '/connexion/'
 
-WKHTMLTOPDF_CMD_OPTIONS = {
-    'quiet': True,
-}
 
-DISQUS_API_KEY = '7HKdCLKaSza707dunlILolosntoSPlxvjSMA15nrw6GjkhckOpxm1PhqyKLC7YJH'
+DISQUS_API_KEY = os.environ.get("DISQUS_KEY", '')
 DISQUS_WEBSITE_SHORTNAME = 'VulgaireDev'
 
 SITE_ID = 1
