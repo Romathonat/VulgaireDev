@@ -30,7 +30,7 @@ VULGAIREDEV_DB_PASSWORD = os.environ.get("VULGAIREDEV_DB_PASSWORD", '')
 VULGAIREDEV_GMAIL_PASSWORD = os.environ.get("VULGAIREDEV_DB_PASSWORD", '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['www.vulgairedev.fr',
                  '.vulgairedev.fr', '127.0.0.1', 'localhost', 'web']
@@ -50,7 +50,7 @@ INSTALLED_APPS = (
     'VulgaireDev.templatetags',
     'VulgaireDev',
     'blog',
-    'disqus'
+    'disqus',
 )
 
 MIDDLEWARE_CLASSES = (
