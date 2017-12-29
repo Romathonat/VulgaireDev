@@ -46,8 +46,7 @@
             </ul>
 
 
-            <form class="input-group recherche" action="{% url
-                "blog.views.search" %}" method="post">
+            <form class="input-group recherche" action="{% url "blog.views.search" %}" method="post">
                 {% csrf_token %}
                 <input type="text" class="search-query form-control" name="recherche" id="id_recherche"
                        placeholder="Recherche"/>
