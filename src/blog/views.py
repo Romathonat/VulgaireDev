@@ -1,4 +1,5 @@
 # coding: utf-8
+
 import re
 import os
 
@@ -8,6 +9,10 @@ from misaka import Markdown, HtmlRenderer
 
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
+from django.http import HttpResponse
+
+from nbconvert import HTMLExporter
+from nbformat import reads as format_read
 
 from blog.forms import rechercheForm
 from blog.myViews.jumpSpecialView import jump_special_view
@@ -50,24 +55,40 @@ def read(request, slug):
     tiret = "-"
     categories = tiret.join(categories)
 
-    url_GitHub = article.urlGitHub
-    response = get_article_from_github(url_GitHub)
-
-    if response.status_code < 300:
-        rndr = HtmlRenderer()
-        md = Markdown(rndr, extensions=('fenced-code', 'math'))
-        article_markdown = md(response.content.decode('utf-8'))
-    else:
-        article_markdown = (
-           'Error calling the GitHub API!'
-        )
     # for some special posts, we use js code, so we use specific template
     retour = jump_special_view(request, locals())
 
     if retour:
         return retour
 
-    return render(request, 'markdown.html', {
+    url_GitHub = article.urlGitHub
+    response = get_article_from_github(url_GitHub)
+
+    extension = url_GitHub.split('.')[1]
+
+    if response.status_code < 300:
+        if extension == 'md':
+            rndr = HtmlRenderer()
+            md = Markdown(rndr, extensions=('fenced-code', 'math'))
+            article_markdown = md(response.content.decode('utf-8'))
+            return render(request, 'markdown.html', {
+                    'article': article,
+                    'categories': categories,
+                    'article_markdown': article_markdown,
+                    'url_github': url_GitHub
+            })
+
+        elif extension == 'ipynb':
+            notebook = format_read(response.content.decode('utf-8'),
+                                   as_version=4)
+            print(notebook.cells[0])
+            (body, _) = HTMLExporter().from_notebook_node(notebook)
+            return HttpResponse(body)
+    else:
+        article_markdown = (
+           'Error calling the GitHub API!'
+        )
+        return render(request, 'markdown.html', {
                     'article': article,
                     'categories': categories,
                     'article_markdown': article_markdown,
