@@ -9,7 +9,6 @@ from misaka import Markdown, HtmlRenderer
 
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
-from django.http import HttpResponse
 
 from nbconvert import HTMLExporter
 from nbformat import reads as format_read
@@ -81,9 +80,16 @@ def read(request, slug):
         elif extension == 'ipynb':
             notebook = format_read(response.content.decode('utf-8'),
                                    as_version=4)
-            print(notebook.cells[0])
-            (body, _) = HTMLExporter().from_notebook_node(notebook)
-            return HttpResponse(body)
+            html_explorer = HTMLExporter()
+            html_explorer.template_file = 'basic'
+            (body, _) = html_explorer.from_notebook_node(notebook)
+
+            return render(request, 'lire_ipynb.html', {
+                    'article': article,
+                    'ipynb': body,
+                    'categories': categories,
+            })
+
     else:
         article_markdown = (
            'Error calling the GitHub API!'

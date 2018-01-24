@@ -5,4 +5,9 @@ window.onload = function () {
         parent = mathjaxNodes[i].parentNode;
         parent.className = parent.className + " centreur"
     }
+    var aCodes = document.getElementsByTagName('pre');
+    for (var i=0; i < aCodes.length; i++) {
+         hljs.highlightBlock(aCodes[i]);
+    }
 }
+
