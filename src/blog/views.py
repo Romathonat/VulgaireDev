@@ -102,8 +102,8 @@ def read(request, slug):
            })
 
 
-def categorie(request, name):
-    categorie = get_object_or_404(Categorie, nom=name)
+def categorie(request, nom):
+    categorie = get_object_or_404(Categorie, nom=nom)
     articles = Article.objects.filter(
                     categorie=categorie,
                     publie=True
