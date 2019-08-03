@@ -1,0 +1,77 @@
+{% load static %}
+{% load affichageCategories %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script type="text/javascript"
+            src="/static/js/highlight.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/monokai_sublime.css"/>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript"
+            src="{% static 'js/modifsPersos.js' %}">
+    </script>
+    
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
+    {% block links%}{% endblock %}
+    <title>{% block title %}Vulgaire Developpeur{% endblock %}</title>
+</head>
+
+<body>
+<header>
+    <a href="{% url "blog.views.home" %}">
+        <div id="banniere" alt="banniere"></div>
+    </a>
+</header>
+
+
+<div class="container monContainer">
+    <div class="row">
+        <nav id="navigation" class="col-sm-3 col-sm-push-9 col-xs-8 col-xs-push-2">
+            <div class="menu_interne">
+            <h3>Catégories</h3>
+
+            {% affichageCategories %}
+
+            <ul class="list-group contact">
+                <li class="list-group-item">
+                    <div class="centreur"><a href="{% url "blog.views.contact" %}"> A propos/Who am I ?</a></div>
+                </li>
+            </ul>
+
+
+            <form class="input-group recherche" action="{% url "blog.views.search" %}" method="post">
+                {% csrf_token %}
+                <input type="text" class="search-query form-control" name="recherche" id="id_recherche"
+                       placeholder="Recherche"/>
+                <span class="input-group-btn">
+                <button class="btn btn-search" type="submit">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+            </form>
+            </div>
+        </nav>
+
+        <section id="content" class="col-sm-9 col-sm-pull-3 col-xs-12">
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+
+</div>
+</body>
+
+{% block ajoutJSFin %}
+{% endblock %}
+
+{% load disqus_tags %}
+{% disqus_dev %}
+
+</html>

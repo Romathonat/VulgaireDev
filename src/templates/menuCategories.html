@@ -1,0 +1,10 @@
+<ul id="listeCategories">
+    {% for categorie in categories %}
+        <li class="categories">
+            <div class="puce">
+                <div class="couleurPuce"
+                     style=" background-color: {{ categorie.couleur }};"></div></div>
+                <a href="{% url "blog.views.categorie" categorie.nom %}" class="lienCategorie">{{ categorie.nom }}</a>
+        </li>
+    {% endfor %}
+</ul>

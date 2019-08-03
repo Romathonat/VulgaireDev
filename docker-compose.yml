@@ -1,0 +1,41 @@
+version: '2'  
+services:  
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:8000"
+    volumes:
+      - ./src:/src
+      - ./src/static:/static
+      - ./src//media:/media
+      - ./config/nginx:/etc/nginx/conf.d
+    depends_on:
+      - web
+
+  web:
+    build: .
+    container_name: django
+    depends_on:
+      - db
+    volumes:
+      - ./src/static:/src/static
+      - ./src/media:/src/media
+    expose:
+      - "8000"
+    environment:
+      VULGAIREDEV_SECRET_KEY: ${VULGAIREDEV_SECRET_KEY}
+      VULGAIREDEV_DB_PASSWORD: ${VULGAIREDEV_DB_PASSWORD}
+      VULGAIREDEV_GMAIL_PASSWORD: ${VULGAIREDEV_GMAIL_PASSWORD}
+      GITHUB_PASSWORD: ${GITHUB_PASSWORD}
+      DISQUS_KEY: ${DISQUS_KEY}
+  db:
+    image: mysql:5.7
+    container_name: db
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    environment:
+       MYSQL_ROOT_PASSWORD: ${VULGAIREDEV_DB_PASSWORD}
+       MYSQL_DATABASE: vulgairedev 
+       MYSQL_USER: vulgairedev 
+       MYSQL_PASSWORD: ${VULGAIREDEV_DB_PASSWORD} 

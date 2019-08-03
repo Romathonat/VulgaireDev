@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 align="center">Recherche</h1>
+    {% for article in resultatsRecherche %}
+        <div class="article">
+            <h3><a href="{% url "blog.views.read" article.slug %}">{{ article.titre }}</a>
+
+                <p class="infosArticle">par <a href="mailto:{{ article.auteur.email }}"
+                                               target="_top">{{ article.auteur }}</a><br/><br/></p>
+            </h3>
+            <p>{{ article.preview|safe }}</p>
+            <p><a href="{% url "blog.views.read" article.slug %}">Lire la suite</a>
+            <hr/>
+        </div>
+    {% endfor %}
+{% endblock %}

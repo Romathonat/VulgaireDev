@@ -1,0 +1,249 @@
+a {
+    color: rgb(244, 122, 0);
+    outline: 0;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(244, 122, 0);
+}
+
+a:link {
+    color: rgb(244, 122, 0);
+}
+
+a:active {
+    color: rgb(244, 122, 0) !important;
+}
+
+p > a:visited {
+    color: rgb(180, 80, 0);
+}
+
+code{
+    text-align: left;
+}
+
+#banniere {
+    background: url('../images/vulgaireDevelopeurTaille.png') no-repeat center;
+    background-size:contain;
+    position: relative;
+
+    max-width: 1100px;
+    height: 0;
+    padding-top: 33%;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+
+#content {
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 40px;
+}
+
+.monContainer{
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.separationVerticale {
+    height: 1px;
+    margin-left: 90px;
+    margin-right: 90px;
+    margin-top: 20px;
+
+    border-top: 1px solid darkgrey;
+}
+
+#separationVerticale2 {
+    height: 1px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    border-top: 1px solid darkgrey;
+}
+
+#navigation {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 40px;
+    text-align: center;
+
+}
+
+.menu_interne{
+    border: 1px solid lightgrey;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 40px;
+    background-color: #f8f8f8;
+}
+
+.fa {
+    padding: 5px;
+}
+
+header {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#defineWidth {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#navigation ul, #navigation li {
+    text-align: left;
+}
+
+ul#listeCategories {
+    list-style: none;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+
+li.categories {
+    text-indent: 15px;
+    padding: 3px 0px 3px 0px;
+    white-space: nowrap;
+}
+
+.lienCategorie {
+    vertical-align: middle;
+    opacity: 1;
+}
+
+.puce {
+    background: url("../images/puce.png") no-repeat left;
+    width: 27px;
+    height: 21px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: -39px; /*somme des tailles des div*/
+}
+
+.couleurPuce {
+    opacity: 0.3;
+    margin-left: 5px;
+    margin-top: 4px;
+    width: 16px;
+    height: 16px;
+    transition: opacity 1s;
+    line-height: 12px;
+}
+
+.categories:hover .couleurPuce {
+    /*quand on passe sur li, on change l'opacity de la couleur*/
+    opacity: 1;
+}
+
+p {
+    text-align: left;
+    line-height: 1.5;
+    font-size: 11pt;
+    color: rgb(40, 40, 40);
+}
+
+h1, h2, h4, h5, h6 {
+    font-family: Calibri, Arial, sans-serif;
+}
+
+body {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+hr {
+    border-top: 1px solid darkgrey;
+}
+
+#content {
+    text-align: left;
+}
+
+.centreur {
+    text-align: center;
+}
+
+.btn-search {
+    color: #fff;
+    background-color: rgb(255, 165, 74);
+    border-color: rgb(255, 143, 32);
+}
+
+.btn-search:focus,
+.btn-search.focus {
+    color: #fff;
+    background-color: rgb(255, 143, 32);
+    border-color: rgb(255, 143, 32);
+}
+
+.btn-search:hover {
+    color: #fff;
+    background-color: rgb(255, 143, 32);
+    border-color: rgb(255, 143, 32);
+}
+
+.recherche {
+    margin-top: 25px;
+}
+
+.infosArticle {
+    color: darkgrey;
+}
+
+.contact {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.math-tex {
+    font-size: 1.0em;
+}
+
+footer {
+    text-align: center;
+    padding-top: 90px;
+}
+
+.foot {
+    font-size: 0.9em;
+}
+
+.commentaires {
+    text-align: center;
+}
+
+#nombresDisponibles {
+    margin-bottom: 50px;
+}
+
+.editGithub{
+    float: right;
+    vertical-align: middle;
+    background-color: white;
+    border: 1px solid rgb(200,200,200);
+    color: rgb(100,100,100) !important;
+    font-size: 80%;
+    padding: 2px 8px 2px 8px;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.editGithub:hover{
+    text-decoration: none;
+}
+
+.contenu * img {
+    display: block;
+    margin: 0 auto;
+    max-width:100%;
+    max-height:100%;
+}

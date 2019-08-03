@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for article in articles %}
+        <div class="article">
+
+            <h3><a href="{% url "blog.views.read" article.slug %}">{{ article.titre }}</a></h3>
+
+            <div class="well well-sm">
+                <span class="label label-default">Date</span>
+                {{ article.date|date:"DATE_FORMAT" }}
+                <span class="label label-default">Catégories</span>
+                {% for categorie in article.categorie.all %}
+                    <a href="{% url "blog.views.categorie" categorie.nom %}">{{ categorie }}</a>
+                    {% if not forloop.last %}/
+                    {% endif %}
+                {% endfor %}
+                par <a href="mailto:{{ article.auteur.email }}" target="_top">{{ article.auteur }}</a>
+            </div>
+
+            <p>
+                {{ article.preview|safe }}
+            </p>
+
+            <p><a href="{% url "blog.views.read" article.slug %}">Lire la suite</a><br><br></p>
+
+        </div>
+    {% endfor %}
+
+    <div class="centreur">
+        <ul class="pagination">
+            {% for page in pagination_articles.page_range %}
+                <li><a href="{% url "blog.views.home" page %}">{{ page }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

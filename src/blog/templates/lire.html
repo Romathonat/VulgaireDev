@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1>{{ article.titre }} </h1>
+<div class="well well-sm">
+    <span class="label label-default">Date</span>
+    {{ article.date|date:"DATE_FORMAT" }}
+    <span class="label label-default">Catégories</span>
+    {% for categorie in article.categorie.all %}
+    <a href="{% url "blog.views.categorie" categorie.nom %}">{{ categorie }}</a>
+    {% if not forloop.last %}/
+    {% endif %}
+    {% endfor %}
+    par <a href="mailto:{{ article.auteur.email }}" target="_top">{{ article.auteur }}</a>
+
+
+</div>
+<div class="contenu">{{ article.contenu|safe }}</div>
+{% block ajout %}
+{% endblock %}
+
+<div class="separationVerticale"></div>
+<div class="commentaires">
+    <h3>Commentaires</h3>
+</div>
+
+{% load disqus_tags %}
+{% disqus_dev %}
+{% disqus_show_comments %}
+
+{% endblock %}
