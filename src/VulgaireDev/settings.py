@@ -102,7 +102,7 @@ DATABASES = {
 
 # Request cache
 requests_cache.install_cache(cache_name='github_cache', backend='sqlite',
-                             expire_after=120)
+                             expire_after=1800)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
