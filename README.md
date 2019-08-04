@@ -7,7 +7,7 @@ All the project is orchestrated by **docker-compose**, and each of the previous 
 
 ## Blog posts
 
-Blog posts are on github [here](https://github.com/Romathonat/vulgaireDevEntries), so I can edit them easily, and other people can create/update article via pull request. The django app uses the github api to retrieve posts from github. The number of calls is limited, so there is a cache system (3 minutes of cache).
+Blog posts are on github [here](https://github.com/Romathonat/vulgaireDevEntries), so I can edit them easily, and other people can create/update article via pull request. All markdown files are pulled from github (sync). 
 
 ## Deploy
 
@@ -24,6 +24,9 @@ export VULGAIREDEV_SECRET_KEY=''
 export GITHUB_PASSWORD=''
 export DISQUS_key=''
 ```
+
+
+
 
 You need to have docker-compose and docker installed, then launch:
 
