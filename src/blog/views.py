@@ -9,6 +9,7 @@ from misaka import Markdown, HtmlRenderer
 
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage
+from django.conf import settings 
 
 from nbconvert import HTMLExporter
 from nbformat import reads as format_read
@@ -31,7 +32,8 @@ def home(request, page=1):
     return render(request, "accueil.html", locals())
 
 
-def get_article_from_github(url_GitHub):
+def get_article_from_github(url_article):
+    '''
     url = (
             'https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/'
             'master/{}'.format(url_GitHub)
@@ -43,6 +45,16 @@ def get_article_from_github(url_GitHub):
                 url,
                 auth=HTTPBasicAuth('Romathonat', GITHUB_PASSWORD)
                 )
+    '''
+    url = os.path.join('vulgaireDevEntries', url_article)
+    url = os.path.join('static', url)
+
+    try:
+        with open(os.path.join(settings.BASE_DIR, url), 'r') as f:
+            response = f.read()
+    except:
+        response = 'Error'
+    
     return response
 
 
@@ -59,27 +71,27 @@ def read(request, slug):
 
     if retour:
         return retour
+    
+    url_article = '{}'.format(getattr(article, 'urlGitHub'))
 
-    url_GitHub = article.urlGitHub
-    response = get_article_from_github(url_GitHub)
+    response = get_article_from_github(url_article)
 
-    extension = url_GitHub.split('.')[1]
+    extension = url_article.split('.')[1]
 
-    if response.status_code < 300:
+    if response != 'Error':
         if extension == 'md':
             rndr = HtmlRenderer()
             md = Markdown(rndr, extensions=('fenced-code', 'math'))
-            article_markdown = md(response.content.decode('utf-8'))
+            article_markdown = md(response)
             return render(request, 'markdown.html', {
                     'article': article,
                     'categories': categories,
                     'article_markdown': article_markdown,
-                    'url_github': url_GitHub
+                    'url_github': url_article 
             })
 
         elif extension == 'ipynb':
-            notebook = format_read(response.content.decode('utf-8'),
-                                   as_version=4)
+            notebook = format_read(response)
             html_explorer = HTMLExporter()
             html_explorer.template_file = 'basic'
             (body, _) = html_explorer.from_notebook_node(notebook)
@@ -92,13 +104,13 @@ def read(request, slug):
 
     else:
         article_markdown = (
-           'Error calling the GitHub API!'
+           'Error reading this article!'
         )
         return render(request, 'markdown.html', {
                     'article': article,
                     'categories': categories,
                     'article_markdown': article_markdown,
-                    'url_github': url_GitHub
+                    'url_github': url_article 
            })
 
 
