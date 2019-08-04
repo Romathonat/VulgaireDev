@@ -30,3 +30,7 @@ You need to have docker-compose and docker installed, then launch:
 ``` bash
 ./launch.sh
 ``` 
+
+## Dev
+The simplest way is to launch it like in production, just changing in settings debug to True.
+It may not be the best way to do it but I do not have time to make a complete profesionnal dev/prod workflow.
