@@ -25,6 +25,11 @@ export GITHUB_PASSWORD=''
 export DISQUS_key=''
 ```
 
+You also need to add the a line to the crontab (crontab -e) in order to pull often:
+
+``` bash
+*/1 * * * * cd /webApps/VulgaireDev/src/static/vulgaireDevEntries && git pull
+```
 
 
 
