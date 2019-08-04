@@ -1,0 +1,3 @@
+[submodule "src/static/vulgaireDevEntries"]
+	path = src/static/vulgaireDevEntries
+	url = https://github.com/Romathonat/vulgaireDevEntries.git
