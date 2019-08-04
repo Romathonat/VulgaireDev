@@ -32,13 +32,17 @@ export VULGAIREDEV_SECRET_KEY=''
 export GITHUB_PASSWORD=''
 export DISQUS_key=''
 ```
+Then 
+```bash
+git clone --recurse-submodules https://github.com/Romathonat/VulgaireDev.git
+```
+
 
 You also need to add the a line to the crontab (crontab -e) in order to pull often:
 
 ``` bash
-*/1 * * * * cd /webApps/VulgaireDev/src/static/vulgaireDevEntries && git pull
+*/1 * * * * cd /webApps/VulgaireDev/src/static/vulgaireDevEntries && git fetch && git merge origin/master
 ```
-
 
 
 Then, you just need to have docker-compose and docker installed, then launch:
