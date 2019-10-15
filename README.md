@@ -25,11 +25,9 @@ You need to provide env vars presents in docker-compose.yml in a ~/.profile, lik
 export VULGAIREDEV_DB_PASSWORD=''
 export VULGAIREDEV_GMAIL_PASSWORD=''
 
-
 # the secret key of the django app
 export VULGAIREDEV_SECRET_KEY=''
 
-export GITHUB_PASSWORD=''
 export DISQUS_key=''
 ```
 Then 

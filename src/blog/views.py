@@ -31,7 +31,7 @@ def home(request, page=1):
     return render(request, "accueil.html", locals())
 
 
-def get_article_from_github(url_article):
+def get_article_from_local(url_article):
     url = os.path.join('vulgaireDevEntries', url_article)
     url = os.path.join('static', url)
 
@@ -59,7 +59,7 @@ def read(request, slug):
         return retour
     
     url_article = '{}'.format(getattr(article, 'urlGitHub'))
-    response = get_article_from_github(url_article)
+    response = get_article_from_local(url_article)
     extension = url_article.split('.')[1]
 
     if response != 'Error':
