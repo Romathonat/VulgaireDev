@@ -1,5 +1,4 @@
 # coding: utf-8
-
 import re
 import os
 
@@ -33,19 +32,6 @@ def home(request, page=1):
 
 
 def get_article_from_github(url_article):
-    '''
-    url = (
-            'https://raw.githubusercontent.com/Romathonat/vulgaireDevEntries/'
-            'master/{}'.format(url_GitHub)
-    )
-
-    GITHUB_PASSWORD = os.environ.get("GITHUB_PASSWORD", '')
-
-    response = requests.get(
-                url,
-                auth=HTTPBasicAuth('Romathonat', GITHUB_PASSWORD)
-                )
-    '''
     url = os.path.join('vulgaireDevEntries', url_article)
     url = os.path.join('static', url)
 
@@ -73,9 +59,7 @@ def read(request, slug):
         return retour
     
     url_article = '{}'.format(getattr(article, 'urlGitHub'))
-
     response = get_article_from_github(url_article)
-
     extension = url_article.split('.')[1]
 
     if response != 'Error':
@@ -91,7 +75,7 @@ def read(request, slug):
             })
 
         elif extension == 'ipynb':
-            notebook = format_read(response)
+            notebook = format_read(response, as_version=4)
             html_explorer = HTMLExporter()
             html_explorer.template_file = 'basic'
             (body, _) = html_explorer.from_notebook_node(notebook)
@@ -100,6 +84,7 @@ def read(request, slug):
                     'article': article,
                     'ipynb': body,
                     'categories': categories,
+                    'url_github': url_article
             })
 
     else:
@@ -148,7 +133,7 @@ def search(request):
                 motsPreview = motsPreview.split(" ")
                 motsPreview = [mot.lower() for mot in motsPreview]
                 for mot in motsPreview:
-                    if (motsPreview == search):
+                    if (mot == search):
                         appendIfUnique(resultatsRecherche, article)
 
     return render(request, 'recherche.html', locals())

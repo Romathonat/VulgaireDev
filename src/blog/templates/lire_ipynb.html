@@ -17,7 +17,7 @@
     {% endif %}
     {% endfor %}
     par <a href="mailto:{{ article.auteur.email }}" target="_top">{{ article.auteur }}</a>
-
+    <a class="editGithub" href="https://github.com/Romathonat/vulgaireDevEntries/blob/master/{{url_github}}">Edit on Github</a>
 
 </div>
 <div class="contenu">{{ ipynb|safe }}</div>
