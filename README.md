@@ -38,7 +38,7 @@ git clone --recurse-submodules https://github.com/Romathonat/VulgaireDev.git
 ```
 
 
-You also need to add the a line to the crontab (crontab -e) in order to pull often:
+You also need to add the a line to the crontab (crontab -e) in order to sync data each minute:
 
 ``` bash
 */1 * * * * cd /webApps/VulgaireDev/src/static/vulgaireDevEntries && git fetch && git merge origin/master
@@ -52,4 +52,4 @@ Then, you just need to have docker-compose and docker installed, then launch:
 
 ## Dev
 The simplest way is to launch it like in production, just changing in settings debug to True.
-It may not be the best way to do it but I do not have time to make a complete profesionnal dev/prod workflow.
+It is probably not the best way to do it (do not have enough time to do better right now).
