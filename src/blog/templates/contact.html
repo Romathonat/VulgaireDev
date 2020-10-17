@@ -1,28 +1,41 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
-    <h3 align="center">A propos / Who am I ?</h3>
-    <p><br/>Romain MATHONAT, ingénieur en informatique diplômé de l'INSA de
-    Lyon. Je suis actuellement en thèse CIFRE dans l'équipe "Data Mining &
-    Machine Learning" du LIRIS, et travaillant en tant qu'ingénieur chez Atos
-    Lyon le reste de mon temps. De nombreux articles présents sur le web m'ont
-    beaucoup aidé et m'aident toujours dans mon activité, j'apporte donc ma
-    pierre à l'édifice, pour aider/expliquer/vulgariser.
-        <br/>
-        Vous pouvez me joindre via mon mail ci-dessous.
+<h3 align="center">A propos / Who am I ?</h3>
+<div class="col-md-3">
+    <img src="{% static 'images/romain.jpg' %}" height="240" class="img-rounded image_contact">
+</div>
+<div class="col-md-9">
+    <p class="space_left"><br/>Je m'appelle Romain MATHONAT, ingénieur et docteur en informatique diplômé de l'INSA de
+        Lyon. De nombreux articles présents sur le web m'ont
+        beaucoup aidé et m'aident toujours dans mon activité, j'apporte donc ma
+        pierre à l'édifice. Mes travaux de recherche ont porté sur la découverte de
+        règles interprétables dans différents types de données, telles que les séquences
+        d'ensembles d'objets, les séries temporelles ou les données numériques à hautes dimensions. D'un point de vu
+        applicatif j'ai travaillé à l'optimisation de pousse de plantes dans le contexte des fermes urbaines,
+        mais aussi à l'analyse de données issues de jeux vidéos à des fins de prédiction du comportement utilisateur.
+        De manière plus générale je m'intéresse à la découverte de connaissances, à la science des données et à
+        l'intelligence artificielle.
+        Vous pouvez accéder à mes publications scientifiques en accès libre ci-dessous.
     </p>
+</div>
     <p>
-        My name is Romain MATHONAT. I am a french IT engineer, actually working
-        in the DM2L team, at LIRIS, in Lyon, as a Ph.D Student. I also work at Atos as
-        an engineer. Many blog posts helped me in the past, so now I also want
-        to contribute to the web knowledge, and help/explain/vulgarize. 
-        <br/>
-        You can contact me via email.
+        My name is Romain MATHONAT. I have an engineer degree and a Ph.D in computer sciences.
+        Many blog posts helped me in the past, so now I also want
+        to contribute to the web knowledge, and help/explain/vulgarize.
+        My research interests include supervised rule discovery in different data types such as sequences of itemsets,
+        time series and high dimensional numerical data. From an applicative point of view, I worked on
+        urban farming optimization, and player behaviour detection in game analytics, for example.
+        More generally, I am interested in knowledge discovery, data science and AI.
+        You can access my scientific publications freely below.
     </p>
-    <div class="centreur">
-        <a href="mailto:romain.mathonat@gmail.com"><i class="fa fa-envelope fa-3x" aria-hidden="true"></i></a>
-        <a href="https://github.com/Romathonat"><i class="fa fa-github fa-3x" aria-hidden="true"></i></a>
-        <a href="https://www.linkedin.com/in/romain-mathonat-478910b5/?ppe=1"><i class="fa fa-linkedin     fa-3x" aria-hidden="true"></i></a>
-        <a href="https://twitter.com/romathonat"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
-    </div>
+<div class="centreur">
+    <a href="mailto:romain.mathonat@gmail.com"><i class="fa fa-envelope fa-3x" aria-hidden="true"></i></a>
+    <a href="https://github.com/Romathonat"><i class="fa fa-github fa-3x" aria-hidden="true"></i></a>
+    <a href="https://www.linkedin.com/in/romain-mathonat-478910b5/?ppe=1"><i class="fa fa-linkedin     fa-3x"
+                                                                             aria-hidden="true"></i></a>
+    <a href="https://twitter.com/romathonat"><i class="fa fa-twitter fa-3x" aria-hidden="true"></i></a>
+    <a href="https://hal.archives-ouvertes.fr/search/index/q/*/authIdHal_s/romain-mathonat"><i class="fa fa-book fa-3x"
+                                                                                               aria-hidden="true"></i></a>
+</div>
 {% endblock %}

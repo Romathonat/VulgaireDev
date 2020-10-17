@@ -24,6 +24,13 @@ code{
     text-align: left;
 }
 
+.image_contact{
+    margin-top: 35px;
+}
+.space_left{
+    padding-left: 40px;
+}
+
 #banniere {
     background: url('../images/vulgaireDevelopeurTaille.png') no-repeat center;
     background-size:contain;
@@ -109,7 +116,7 @@ ul#listeCategories {
 }
 
 li.categories {
-    text-indent: 15px;
+    text-indent: 0px;
     padding: 3px 0px 3px 0px;
     white-space: nowrap;
 }
@@ -125,7 +132,7 @@ li.categories {
     height: 21px;
     display: inline-block;
     vertical-align: middle;
-    margin-left: -39px; /*somme des tailles des div*/
+    margin-left: -62px; /*somme des tailles des div*/
 }
 
 .couleurPuce {
