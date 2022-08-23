@@ -9,7 +9,7 @@ Markdown==2.6.6
 misaka==2.0.0
 mock==2.0.0
 mysqlclient
-nbconvert==5.3.1
+nbconvert==6.5.1
 requests==2.10.0
 requests-cache
 urllib3==1.15.1
